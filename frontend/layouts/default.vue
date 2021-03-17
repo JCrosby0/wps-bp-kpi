@@ -1,7 +1,7 @@
 <template>
   <div>
     <Nav />
-    <Nuxt />
+    <Nuxt class="main" />
   </div>
 </template>
 <script>
@@ -28,8 +28,14 @@ html {
   box-sizing: border-box;
   overflow: hidden;
   background: #efefef;
+  height: 100vh;
+  text-align: center;
 }
 
+.main {
+  height: calc(100vh - 132px);
+  overflow: auto;
+}
 *,
 *::before,
 *::after {

@@ -80,7 +80,7 @@ export default {
 .component {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 100vw;
 }
 .nav {
   display: flex;
@@ -104,6 +104,7 @@ export default {
   display: block;
   font-weight: 400;
   font-size: 3rem;
+  line-height: 55px;
   color: black;
   letter-spacing: 3px;
 }
@@ -125,5 +126,11 @@ export default {
   color: #ccc;
   box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.5);
   z-index: 1;
+}
+
+@media only screen and (max-width: 550px) {
+  .title {
+    display: none;
+  }
 }
 </style>

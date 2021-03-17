@@ -12,11 +12,6 @@
 </template>
 
 <style>
-body {
-  text-align: center;
-  font-size: 16pt;
-  min-height: 100vh;
-}
 .container {
   height: 100%;
   margin: 0 auto;

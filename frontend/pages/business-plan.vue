@@ -82,9 +82,7 @@ export default {
   },
   methods: {
     setCurrentTab(tab) {
-      console.log('setting current tab to: ', tab)
       this.currentTab = tab
-      console.log(this.currentTab)
     },
   },
   apollo: {
@@ -113,6 +111,7 @@ export default {
   display: flex;
   flex-direction: row;
   text-align: center;
+  flex-wrap: wrap;
 }
 .container {
   display: flex;
