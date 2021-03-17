@@ -15,7 +15,6 @@
       >
         {{ button.name }}
       </a>
-      <nuxt-link class="button--grey" to="/">Home</nuxt-link>
     </div>
     <ul v-if="selectedCategory">
       <li

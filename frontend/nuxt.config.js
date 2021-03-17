@@ -11,7 +11,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'frontend',
+    title: 'WPS Business Plan KPIs',
     htmlAttrs: {
       lang: 'en',
     },
@@ -26,9 +26,12 @@ export default {
         rel: 'stylesheet',
         href: 'https://fonts.googleapis.com/css?family=Staatliches',
       },
+      {
+        rel: 'stylesheet',
+        href: 'https://fonts.googleapis.com/css?family=Lato',
+      },
     ],
   },
-
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     'uikit/dist/css/uikit.min.css',
