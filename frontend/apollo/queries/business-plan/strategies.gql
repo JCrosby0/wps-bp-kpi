@@ -1,0 +1,8 @@
+query strategies {
+  strategiesForImprovements {
+    value
+    focus_area {
+      display
+    }
+  }
+}

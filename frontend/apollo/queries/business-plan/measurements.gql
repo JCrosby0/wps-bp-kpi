@@ -1,0 +1,8 @@
+query measurements {
+  measuringSuccesses {
+    value
+    focus_area {
+      display
+    }
+  }
+}

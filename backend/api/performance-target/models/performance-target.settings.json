@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "performance_targets",
+  "info": {
+    "name": "PerformanceTarget"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "value": {
+      "type": "string"
+    },
+    "focus_area": {
+      "via": "performance_targets",
+      "model": "drivers"
+    }
+  }
+}

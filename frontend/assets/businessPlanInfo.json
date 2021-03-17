@@ -1,0 +1,5 @@
+[
+{ "name": "Strategies", "to": "/strategies" },
+{ "name": "Measurements", "to": "/measurements" },
+{ "name": "Targets", "to": "/targets" }
+]

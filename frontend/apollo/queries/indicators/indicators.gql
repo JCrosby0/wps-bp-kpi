@@ -1,0 +1,23 @@
+query Indicators {
+  indicators {
+    name
+    id
+    value
+    target
+    rangeLow
+    rangeHigh
+    focalPoint
+    type
+    dateAvailable
+    stepsToSuccess
+    measuring_successes {
+      value
+    }
+    performance_targets {
+      value
+    }
+    strategies_for_improvements {
+      value
+    }
+  }
+}

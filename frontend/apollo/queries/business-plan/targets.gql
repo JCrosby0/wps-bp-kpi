@@ -1,0 +1,8 @@
+query targets {
+  performanceTargets {
+    value
+    focus_area {
+      display
+    }
+  }
+}

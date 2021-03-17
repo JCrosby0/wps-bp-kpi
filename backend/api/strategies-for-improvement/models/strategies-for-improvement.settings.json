@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "strategies_for_improvements",
+  "info": {
+    "name": "StrategiesForImprovement"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "value": {
+      "type": "string"
+    },
+    "focus_area": {
+      "via": "strategies_for_improvements",
+      "model": "drivers"
+    }
+  }
+}

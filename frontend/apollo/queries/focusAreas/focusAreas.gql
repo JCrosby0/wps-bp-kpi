@@ -1,0 +1,6 @@
+query FocusAreas {
+  drivers {
+    display
+    to
+  }
+}

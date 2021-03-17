@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/strategies-for-improvements",
+      "handler": "strategies-for-improvement.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/strategies-for-improvements/count",
+      "handler": "strategies-for-improvement.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/strategies-for-improvements/:id",
+      "handler": "strategies-for-improvement.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/strategies-for-improvements",
+      "handler": "strategies-for-improvement.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/strategies-for-improvements/:id",
+      "handler": "strategies-for-improvement.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/strategies-for-improvements/:id",
+      "handler": "strategies-for-improvement.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

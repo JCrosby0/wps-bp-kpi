@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/measuring-successes",
+      "handler": "measuring-success.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/measuring-successes/count",
+      "handler": "measuring-success.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/measuring-successes/:id",
+      "handler": "measuring-success.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/measuring-successes",
+      "handler": "measuring-success.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/measuring-successes/:id",
+      "handler": "measuring-success.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/measuring-successes/:id",
+      "handler": "measuring-success.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

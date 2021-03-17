@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "measuring_successes",
+  "info": {
+    "name": "MeasuringSuccess"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "value": {
+      "type": "string"
+    },
+    "focus_area": {
+      "via": "measuring_successes",
+      "model": "drivers"
+    }
+  }
+}

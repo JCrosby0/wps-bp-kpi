@@ -1,0 +1,61 @@
+{
+  "kind": "collectionType",
+  "collectionName": "indicators",
+  "info": {
+    "name": "Indicators",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "target": {
+      "type": "float"
+    },
+    "rangeLow": {
+      "type": "float"
+    },
+    "rangeHigh": {
+      "type": "float"
+    },
+    "value": {
+      "type": "float"
+    },
+    "history": {
+      "type": "json"
+    },
+    "focalPoint": {
+      "type": "string"
+    },
+    "dateAvailable": {
+      "type": "date"
+    },
+    "stepsToSuccess": {
+      "type": "json"
+    },
+    "measuring_successes": {
+      "collection": "measuring-success"
+    },
+    "performance_targets": {
+      "collection": "performance-target"
+    },
+    "strategies_for_improvements": {
+      "collection": "strategies-for-improvement"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "Qualitative",
+        "Quantitative"
+      ]
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "kind": "collectionType",
+  "collectionName": "drivers",
+  "info": {
+    "name": "FocusAreas",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "display": {
+      "type": "string"
+    },
+    "to": {
+      "type": "string"
+    },
+    "data": {
+      "type": "json"
+    },
+    "description": {
+      "type": "text"
+    },
+    "strategies_for_improvements": {
+      "collection": "strategies-for-improvement",
+      "via": "focus_area"
+    },
+    "measuring_successes": {
+      "collection": "measuring-success",
+      "via": "focus_area"
+    },
+    "performance_targets": {
+      "collection": "performance-target",
+      "via": "focus_area"
+    },
+    "uid": {
+      "type": "uid"
+    },
+    "name": {
+      "type": "string"
+    }
+  }
+}
