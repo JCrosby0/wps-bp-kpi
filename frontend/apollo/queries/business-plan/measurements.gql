@@ -1,5 +1,5 @@
 query measurements {
-  measuringSuccesses {
+  data: measuringSuccesses {
     value
     focus_area {
       display

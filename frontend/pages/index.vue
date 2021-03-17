@@ -7,7 +7,6 @@
         achieving the Business Plan's goals
       </p>
     </div>
-    <nuxt-view> </nuxt-view>
   </div>
 </template>
 

@@ -1,5 +1,5 @@
 query targets {
-  performanceTargets {
+  data: performanceTargets {
     value
     focus_area {
       display

@@ -1,5 +1,5 @@
 query strategies {
-  strategiesForImprovements {
+  data: strategiesForImprovements {
     value
     focus_area {
       display

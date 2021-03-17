@@ -16,9 +16,9 @@
             :key="area.to"
             class="button--orange"
             :to="{
-              name: 'business-plan',
+              name: 'business-plan-slug',
               params: {
-                selection: area.name,
+                slug: area.name,
               },
             }"
           >
@@ -39,12 +39,31 @@
             {{ area.display }}
           </nuxt-link>
           <p>View Upcoming Indicators:</p>
-          <nuxt-link to="test" class="button--orange"
+          <nuxt-link
+            :to="{
+              name: 'upcoming',
+              params: {},
+            }"
+            class="button--orange"
             >Upcoming Indicators</nuxt-link
           >
           <p>View Progress Summary:</p>
-          <nuxt-link to="progress" class="button--orange"
+          <nuxt-link
+            :to="{
+              name: 'progress',
+              params: {},
+            }"
+            class="button--orange"
             >Progress Summary</nuxt-link
+          >
+          <p>View Indicator History:</p>
+          <nuxt-link
+            :to="{
+              name: 'history',
+              params: {},
+            }"
+            class="button--orange"
+            >Historical Data</nuxt-link
           >
         </div>
       </div>
@@ -126,6 +145,8 @@ export default {
   color: #ccc;
   box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.5);
   z-index: 1;
+  overflow-y: auto;
+  max-height: calc(100vh - 132px);
 }
 
 @media only screen and (max-width: 550px) {
