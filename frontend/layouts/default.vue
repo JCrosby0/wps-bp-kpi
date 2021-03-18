@@ -13,7 +13,7 @@ export default {
 
 <style>
 :root {
-  --color-orange: #f6782b;
+  --color-orange: hsl(30, 100%, 55%);
   --color-grey: #303030;
 }
 html {
@@ -27,7 +27,11 @@ html {
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
   overflow: hidden;
-  background: #efefef;
+  background: repeating-conic-gradient(
+    from 3deg at 15rem 15rem,
+    hsl(0, 0%, 95%) 0deg 15deg,
+    hsl(0, 0%, 92.5%) 10deg 30deg
+  );
   height: 100vh;
   text-align: center;
 }
@@ -74,6 +78,7 @@ html {
 
 .button--orange {
   display: inline-block;
+  width: 226px;
   border-radius: 4px;
   border: 1px solid var(--color-orange);
   color: var(--color-orange);

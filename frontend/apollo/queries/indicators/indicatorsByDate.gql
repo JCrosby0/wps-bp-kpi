@@ -1,5 +1,7 @@
-query Indicators {
-  indicators {
+query indicatorsByDate($dateStart: DateTime, $dateEnd: DateTime) {
+  indicators(
+    where: { dateAvailable_gt: $dateStart, dateAvailable_lt: $dateEnd }
+  ) {
     name
     id
     type

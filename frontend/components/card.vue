@@ -6,50 +6,29 @@
     <div class="body">
       <div v-show="activeTab === 0" class="tab-info">
         <p>
-          Focal Point: {{ content.focalPoint }}<br />
-          Target Date:
-          {{ content.dateAvailable }}
+          🙋 {{ content.focalPoint }}<br />
+          📆
+          {{ content.dateAvailable }}<br />
+          {{ content.description }}
         </p>
       </div>
       <div v-show="activeTab === 1" class="tab-metrics">
-        <h5>Associated Items:</h5>
-        <h6>Measuring Success</h6>
-        <div v-for="item1 in content.measuring_successes" :key="item1.value">
-          <span>{{ item1.value }}</span>
-        </div>
-        <h6>Performance Targets</h6>
-        <div v-for="item1 in content.performance_targets" :key="item1.value">
-          <span> {{ item1.value }} </span>
-        </div>
-        <h6>Strategies for Improvement</h6>
-        <div
-          v-for="item1 in content.strategies_for_improvements"
-          :key="item1.value"
-        >
-          <span> {{ item1.value }} </span>
-        </div>
+        <CardMetrics :content="content"></CardMetrics>
       </div>
       <div v-show="activeTab === 2" class="tab-results">
-        <div v-if="content.type == 'Qualitative'" class="qualitative">
-          <!-- text and stuff -->
-          <h5>Progress:</h5>
-          <ol>
-            <li
-              v-for="(item, i) in content.stepsToSuccess"
-              :key="content.name + 'step' + i"
-            >
-              {{ item }}
-            </li>
-          </ol>
-        </div>
-        <div v-else-if="content.type == 'Quantitative'" class="quantitative">
-          <p>
-            Result:<br />
-            [{{ content.rangeLow }}] {{ content.value }} /
-            {{ content.target }} [{{ content.rangeHigh }}]
-          </p>
+        <CardQuali
+          v-if="content.type == 'Qualitative'"
+          class="qualitative"
+          :content="content"
+        >
+        </CardQuali>
+        <CardQuanti
+          v-else-if="content.type == 'Quantitative'"
+          class="quantitative"
+          :content="content"
+        >
           <!-- numbers and stuff -->
-        </div>
+        </CardQuanti>
       </div>
     </div>
     <div class="footer">
@@ -69,7 +48,11 @@
 </template>
 
 <script>
+import CardQuali from '~/components/card-quali'
+import CardQuanti from '~/components/card-quanti'
+import CardMetrics from '~/components/card-metrics'
 export default {
+  components: { CardQuali, CardQuanti, CardMetrics },
   props: {
     content: {
       required: true,
@@ -87,23 +70,59 @@ export default {
       tabs: [{ name: 'Info' }, { name: 'Metrics' }, { name: 'Results' }],
     }
   },
+  methods: {
+    // needleRotation(low, high, value) {
+    //   const normalised = (value - low) / (high - low)
+    //   const degrees = 90 * parseFloat(normalised) - 45
+    //   return `${parseInt(degrees)}deg`
+    // },
+    // status(color) {
+    //   switch (color) {
+    //     case 'green':
+    //       return '✔️'
+    //     case 'orange':
+    //       return '🔶'
+    //     case 'red':
+    //       return '🔴'
+    //     default:
+    //       return '0'
+    //   }
+    // },
+  },
 }
 </script>
 <style scoped>
 .card {
-  border: 1px grey solid;
+  border: 2px var(--color-grey) solid;
   border-radius: 1rem;
   background: #efefef;
   text-align: left;
   margin: 0.5rem;
+  display: flex;
+  width: clamp(300px, 23%, 50%);
+  height: clamp(300px, 30%, 50%);
+  flex-direction: column;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.3);
 }
 .header {
   padding: 1rem;
+  background: var(--color-orange);
+  border-radius: 1rem 1rem 0 0;
+  flex: 0 0 50px;
+}
+.header h3 {
+  margin-bottom: 0;
+}
+.header h6 {
+  margin: 20px 0;
 }
 .body {
   padding: 1rem;
+  overflow: auto;
+  flex: 1 0 150px;
 }
 .footer {
+  flex: 0 0 41px;
 }
 
 .tabs {
@@ -114,6 +133,7 @@ export default {
   align-items: center;
 }
 .tab {
+  flex: 1 1 auto;
   border: 1px grey solid;
   background: #cdcdcd;
   width: 100%;
@@ -134,5 +154,12 @@ export default {
 .tab:last-of-type {
   border-bottom-right-radius: 1rem;
   border-right: none;
+}
+.tab-results {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 100%;
+  overflow: hidden;
 }
 </style>

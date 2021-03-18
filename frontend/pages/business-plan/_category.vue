@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h1>
-      {{ slug }}
+      {{ category }}
     </h1>
     <div class="buttons">
       <nuxt-link
@@ -9,12 +9,12 @@
         :key="'button' + button.name"
         :class="{
           'button--grey': true,
-          active: button.name === slug,
+          active: button.name === category,
         }"
         :to="{
-          name: 'business-plan-slug',
+          name: 'business-plan-category',
           params: {
-            slug: button.name,
+            category: button.name,
           },
         }"
       >
@@ -47,24 +47,14 @@ import strategiesQuery from '~/apollo/queries/business-plan/strategies'
 import targetsQuery from '~/apollo/queries/business-plan/targets'
 import businessPlanInfo from '~/assets/businessPlanInfo.json'
 export default {
-  // async asyncData({ params }) {
-  //   const slug = await params.slug // When calling /abc the slug will be "abc"
-  //   const query =
-  //     slug === 'Targets'
-  //       ? targetsQuery
-  //       : slug === 'Strategies'
-  //       ? strategiesQuery
-  //       : measurementsQuery
-  //   return { slug, query }
-  // },
   data() {
     return {
       businessPlanInfo,
-      slug: this.$route.params.slug,
+      category: this.$route.params.category,
       query:
-        this.slug === 'Targets'
+        this.category === 'Targets'
           ? targetsQuery
-          : this.slug === 'Strategies'
+          : this.category === 'Strategies'
           ? strategiesQuery
           : measurementsQuery,
     }

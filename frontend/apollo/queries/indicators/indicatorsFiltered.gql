@@ -1,5 +1,9 @@
-query Indicators {
-  indicators {
+query indicatorsFiltered($focusArea: String) {
+  indicators(
+    where: {
+      performance_targets: { focus_area: { display_contains: $focusArea } }
+    }
+  ) {
     name
     id
     type
