@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <Nav />
-    <Nuxt class="main" />
+  <div class="default-screen">
+    <Nav class="default-nav" />
+    <Nuxt class="default-main" />
   </div>
 </template>
 <script>
@@ -14,6 +14,7 @@ export default {
 <style>
 :root {
   --color-orange: hsl(30, 100%, 55%);
+  --color-light-orange: hsl(30, 100%, 57.5%);
   --color-grey: #303030;
 }
 html {
@@ -36,8 +37,16 @@ html {
   text-align: center;
 }
 
-.main {
-  height: calc(100vh - 132px);
+.default-screen {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.default-nav {
+  flex: 0 0 132px;
+}
+.default-main {
+  height: 1 1 auto;
   overflow: auto;
 }
 *,
@@ -78,14 +87,14 @@ html {
 
 .button--orange {
   display: inline-block;
-  width: 226px;
+  /* width: 226px; */
   border-radius: 4px;
   border: 1px solid var(--color-orange);
   color: var(--color-orange);
   text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
-  margin-bottom: 15px;
+  padding: 0.5rem 2rem;
+  margin-left: 1rem;
+  margin-bottom: 1rem;
 }
 
 .button--orange:hover {

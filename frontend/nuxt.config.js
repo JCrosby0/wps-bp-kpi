@@ -1,3 +1,4 @@
+require('dotenv').config()
 export default {
   env: {
     strapiBaseUri: process.env.API_URL || 'http://localhost:1337',
@@ -21,7 +22,7 @@ export default {
       { hid: 'description', name: 'description', content: '' },
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'icon', type: 'image/png', href: '/favicon.png' },
       {
         rel: 'stylesheet',
         href: 'https://fonts.googleapis.com/css?family=Staatliches',
@@ -40,8 +41,18 @@ export default {
     'element-ui/lib/theme-chalk/index.css',
   ],
 
+  // for favicon
+  pwa: {
+    icon: {
+      filename: 'favicon.png?v1',
+    },
+  },
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['@/plugins/element-ui', { src: '~/plugins/uikit.js', ssr: false }],
+  plugins: [
+    '@/plugins/element-ui',
+    '@/plugins/axios',
+    { src: '~/plugins/uikit.js', ssr: false },
+  ],
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
@@ -58,6 +69,7 @@ export default {
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
     '@nuxtjs/apollo',
+    '@nuxtjs/auth',
   ],
   apollo: {
     clientConfigs: {
@@ -68,7 +80,9 @@ export default {
     },
   },
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    baseURL: process.env.API_AUTH_URL || 'http://localhost:1337',
+  },
 
   // Content module configuration: https://go.nuxtjs.dev/config-content
   content: {},
@@ -76,5 +90,28 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     transpile: [/^element-ui/],
+  },
+  /*
+   ** Auth module configuration
+   ** See https://auth.nuxtjs.org/schemes/local.html#options
+   */
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: {
+            url: 'auth/local',
+            method: 'post',
+            propertyName: 'jwt',
+          },
+          user: {
+            url: 'users/me',
+            method: 'get',
+            propertyName: false,
+          },
+          logout: false,
+        },
+      },
+    },
   },
 }

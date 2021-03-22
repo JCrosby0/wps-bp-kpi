@@ -1,9 +1,9 @@
 <template>
-  <div class="container">
-    <h1>
+  <div class="business-plan-container">
+    <h1 class="heading">
       {{ category }}
     </h1>
-    <div class="buttons">
+    <!-- <div class="buttons">
       <nuxt-link
         v-for="button in businessPlanInfo"
         :key="'button' + button.name"
@@ -20,7 +20,7 @@
       >
         {{ button.name }}
       </nuxt-link>
-    </div>
+    </div> -->
     <ul v-if="data">
       <li
         v-for="(key, i) in Object.keys(selectedCategory)"
@@ -94,14 +94,17 @@ export default {
 <style scoped>
 .buttons {
   display: flex;
-  flex-direction: row;
+  flex-flow: row wrap;
   text-align: center;
-  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
-.container {
+.business-plan-container {
   display: flex;
   flex-direction: column;
   text-align: left;
+  overflow: auto;
+  padding: 1rem;
 }
 .active {
   background: #35495e;

@@ -9,72 +9,101 @@
         />
       </nuxt-link>
       <div class="title">Business Plan KPIs</div>
+      <!-- <div class="auth">
+        <navAuth />
+      </div> -->
       <div class="links" @click="showMenu = !showMenu"></div>
     </div>
     <transition name="slide-fade">
       <div v-if="showMenu">
         <div class="menu">
-          <p>View Business Plan Strategies, Measurements and Targets</p>
-          <nuxt-link
-            v-for="area in businessPlanInfo"
-            :key="area.to"
-            :to="{
-              name: 'business-plan-category',
-              params: {
-                category: area.name,
-              },
-            }"
-            class="button--orange"
-          >
-            {{ area.name }}
-          </nuxt-link>
-          <p>View Indicators by Category:</p>
-          <nuxt-link
-            v-for="area in drivers"
-            :key="area.to"
-            :to="{
-              name: 'indicators-focusArea',
-              params: {
-                focusArea: area.display,
-              },
-            }"
-            class="button--orange"
-          >
-            {{ area.display }}
-          </nuxt-link>
-          <p>View Indicators by Date:</p>
-          <nuxt-link
-            v-for="link in upcomingIndicators"
-            :key="link.display"
-            :to="{
-              name: 'indicators-date-upcoming',
-              params: {
-                dateStart: link.dateStart,
-                dateEnd: link.dateEnd,
-                upcoming: link.display,
-              },
-            }"
-            class="button--orange"
-            >{{ link.display }}</nuxt-link
-          >
-          <p>View Progress Summary:</p>
-          <nuxt-link
-            :to="{
-              name: 'progress',
-              params: {},
-            }"
-            class="button--orange"
-            >Progress Summary</nuxt-link
-          >
-          <p>View Indicator History:</p>
-          <nuxt-link
-            :to="{
-              name: 'history',
-              params: {},
-            }"
-            class="button--orange"
-            >Historical Data</nuxt-link
-          >
+          <div v-if="isAuthenticated" class="user">
+            <div class="span-label">
+              Logged in as: {{ loggedInUser.username }}
+            </div>
+            <nuxt-link to="/profile" class="button--orange">
+              View Profile
+            </nuxt-link>
+            <div class="button--orange" @click="logout">Logout</div>
+          </div>
+          <div v-else class="notAuth">
+            <span class="span-label">Viewing as Guest</span>
+            <nuxt-link class="button--orange" to="/register"
+              >Register
+            </nuxt-link>
+            <nuxt-link class="button--orange" to="/login">Log in</nuxt-link>
+          </div>
+          <div class="business-plan">
+            <div class="span-label">View Business Plan</div>
+            <nuxt-link
+              v-for="area in businessPlanInfo"
+              :key="area.to"
+              :to="{
+                name: 'business-plan-category',
+                params: {
+                  category: area.name,
+                },
+              }"
+              class="button--orange"
+            >
+              {{ area.name }}
+            </nuxt-link>
+          </div>
+          <div v-if="isAuthenticated" class="authenticated">
+            <div class="span-label">View Indicators by Category:</div>
+            <nuxt-link
+              v-for="area in drivers"
+              :key="area.to"
+              :to="{
+                name: 'indicators-focusArea',
+                params: {
+                  focusArea: area.display,
+                },
+              }"
+              class="button--orange"
+            >
+              {{ area.display }}
+            </nuxt-link>
+          </div>
+          <div v-if="isAuthenticated" class="authenticated">
+            <div class="span-label">View Indicators by Date:</div>
+            <nuxt-link
+              v-for="link in upcomingIndicators"
+              :key="link.display"
+              :to="{
+                name: 'indicators-date-upcoming',
+                params: {
+                  dateStart: link.dateStart,
+                  dateEnd: link.dateEnd,
+                  upcoming: link.display,
+                },
+              }"
+              class="button--orange"
+              >{{ link.display }}</nuxt-link
+            >
+            <div v-if="showNYI" class="showNYI">
+              <div class="span-label">View Progress Summary:</div>
+              <nuxt-link
+                :to="{
+                  name: 'progress',
+                  params: {},
+                }"
+                class="button--orange"
+                >Progress Summary</nuxt-link
+              >
+            </div>
+            <div v-if="showNYI" class="showNYI">
+              <div class="span-label">View Indicator History:</div>
+              <nuxt-link
+                :to="{
+                  name: 'history',
+                  params: {},
+                }"
+                class="button--orange"
+                >Historical Data</nuxt-link
+              >
+            </div>
+          </div>
         </div>
       </div>
     </transition>
@@ -82,12 +111,18 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+// import navAuth from '~/components/nav-auth'
 import focusAreasQuery from '~/apollo/queries/focusAreas/focusAreas'
 import businessPlanInfo from '~/assets/businessPlanInfo.json'
 export default {
+  //   components: {
+  //     navAuth,
+  //   },
   data() {
     return {
       showMenu: false,
+      showNYI: false,
       businessPlanInfo,
       upcomingIndicators: [
         {
@@ -118,12 +153,19 @@ export default {
       ],
     }
   },
+  computed: {
+    ...mapGetters(['isAuthenticated', 'loggedInUser']),
+  },
   watch: {
     $route() {
       this.showMenu = false
     },
   },
   methods: {
+    async logout() {
+      await this.$auth.logout()
+      this.showMenu = false
+    },
     getDateTime(y = 0, m = 0) {
       const now = new Date()
       let year = now.getFullYear() + y
@@ -167,13 +209,14 @@ export default {
   z-index: 2;
   background: repeating-conic-gradient(
     from 3deg at 15rem 15rem,
-    hsl(30, 100%, 57.5%) 0deg 15deg,
-    hsl(30, 100%, 55%) 10deg 30deg
+    var(--color-light-orange) 0deg 15deg,
+    var(--color-orange) 10deg 30deg
   );
   box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.5);
 }
 .logo,
-.links {
+.links,
+.auth {
   flex: 0 0 auto;
 }
 
@@ -187,6 +230,9 @@ export default {
   line-height: 55px;
   color: black;
   letter-spacing: 3px;
+}
+.auth {
+  margin-right: 2rem;
 }
 
 .links {
@@ -213,6 +259,7 @@ export default {
 }
 .menu {
   background: var(--color-grey);
+  text-align: left;
   padding: 1rem;
   color: #ccc;
   box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.5);
@@ -221,9 +268,18 @@ export default {
   max-height: calc(100vh - 132px);
 }
 
+.span-label {
+  width: 250px;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
 @media only screen and (max-width: 550px) {
   .title {
     display: none;
+  }
+  .button--orange {
+    width: 16rem;
   }
 }
 </style>

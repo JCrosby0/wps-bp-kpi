@@ -1,15 +1,17 @@
 <template>
-  <div class="cont-indicators">
-    <h1>{{ focusArea }} Indicators</h1>
-    <div class="arrange-cards">
-      <Card
-        v-for="(ind, i) in indicators"
-        :key="'indicator-' + i"
-        :content="ind"
-        class="card"
-      />
-      <div v-if="indicators && !indicators.length">
-        There are no indicators matching this category.
+  <div>
+    <div class="indicators">
+      <h1>{{ focusArea }} Indicators</h1>
+      <div class="arrange-cards">
+        <Card
+          v-for="(ind, i) in indicators"
+          :key="'indicator-' + i"
+          :content="ind"
+          class="card"
+        />
+        <div v-if="indicators && !indicators.length">
+          There are no indicators matching this category.
+        </div>
       </div>
     </div>
   </div>
@@ -46,7 +48,8 @@ export default {
 </script>
 
 <style scoped>
-.cont-indicators {
+.indicators {
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   align-content: flex-start;

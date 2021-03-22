@@ -1,28 +1,30 @@
 <template>
-  <div class="cont-indicators">
-    <h1>Indicators by Date</h1>
-    <div class="inputs-box">
-      <div class="input-group">
-        <div class="input-label">
-          <label for="dateStart">Start Date</label>
+  <div>
+    <div class="indicators">
+      <h1>Indicators by Date</h1>
+      <div class="inputs-box">
+        <div class="input-group">
+          <div class="input-label">
+            <label for="dateStart">Start Date</label>
+          </div>
+          <input v-model="dateStart" type="date" name="dateStart" />
         </div>
-        <input v-model="dateStart" type="date" name="dateStart" />
-      </div>
-      <div class="input-group">
-        <div class="input-label">
-          <label for="dateEnd">End Date</label>
+        <div class="input-group">
+          <div class="input-label">
+            <label for="dateEnd">End Date</label>
+          </div>
+          <input v-model="dateEnd" type="date" name="dateEnd" />
         </div>
-        <input v-model="dateEnd" type="date" name="dateEnd" />
       </div>
-    </div>
-    <div class="arrange-cards">
-      <Card
-        v-for="(ind, i) in indicators"
-        :key="'indicator-' + i"
-        :content="ind"
-      />
-      <div v-if="indicators && !indicators.length">
-        There are no indicators matching this date range.
+      <div class="arrange-cards">
+        <Card
+          v-for="(ind, i) in indicators"
+          :key="'indicator-' + i"
+          :content="ind"
+        />
+        <div v-if="indicators && !indicators.length">
+          There are no indicators matching this date range.
+        </div>
       </div>
     </div>
   </div>
@@ -90,8 +92,9 @@ export default {
 </script>
 
 <style scoped>
-.cont-indicators {
+.indicators {
   display: flex;
+  padding: 1rem;
   flex-direction: column;
   align-content: flex-start;
 }
