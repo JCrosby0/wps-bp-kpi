@@ -8,7 +8,7 @@
     "start": "strapi start",
     "build": "strapi build",
     "strapi": "strapi",
-    "heroku": "git subtree push --prefix my-app heroku master"
+    "heroku": "git subtree push --prefix wps-bp-kpi heroku main"
   },
   "devDependencies": {},
   "dependencies": {
