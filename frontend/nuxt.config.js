@@ -60,6 +60,7 @@ export default {
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
     '@nuxtjs/apollo',
+    '@nuxtjs/dotenv',
     '@nuxtjs/auth',
   ],
   apollo: {
