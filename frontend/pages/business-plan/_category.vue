@@ -1,7 +1,7 @@
 <template>
   <div class="business-plan-container">
     <h1 class="heading">
-      {{ category }}
+      {{ section }}
     </h1>
     <ul v-if="data">
       <li
@@ -33,8 +33,10 @@ import businessPlanInfo from '~/assets/businessPlanInfo.json'
 export default {
   data() {
     const category = this.$route.params.category
+    const section = businessPlanInfo.find((i) => i.name === category).display
     return {
       businessPlanInfo,
+      section,
       category,
       query:
         category === 'Targets'
@@ -59,6 +61,11 @@ export default {
           return acc
         }, {})
       )
+    },
+  },
+  watch: {
+    category(n, o) {
+      this.section = this.businessPlanInfo.find((i) => i.name === n).display
     },
   },
   created() {
