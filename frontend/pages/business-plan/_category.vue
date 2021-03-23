@@ -3,34 +3,18 @@
     <h1 class="heading">
       {{ category }}
     </h1>
-    <!-- <div class="buttons">
-      <nuxt-link
-        v-for="button in businessPlanInfo"
-        :key="'button' + button.name"
-        :class="{
-          'button--grey': true,
-          active: button.name === category,
-        }"
-        :to="{
-          name: 'business-plan-category',
-          params: {
-            category: button.name,
-          },
-        }"
-      >
-        {{ button.name }}
-      </nuxt-link>
-    </div> -->
     <ul v-if="data">
       <li
         v-for="(key, i) in Object.keys(selectedCategory)"
         :key="'display-key-' + i"
+        class="focus-area"
       >
         {{ key }}
         <ul>
           <li
             v-for="(value, j) in selectedCategory[key]"
             :key="`display-key-${i}-value-${j}`"
+            class="item"
           >
             {{ value }}
           </li>
@@ -48,15 +32,18 @@ import targetsQuery from '~/apollo/queries/business-plan/targets'
 import businessPlanInfo from '~/assets/businessPlanInfo.json'
 export default {
   data() {
+    const category = this.$route.params.category
     return {
       businessPlanInfo,
-      category: this.$route.params.category,
+      category,
       query:
-        this.category === 'Targets'
+        category === 'Targets'
           ? targetsQuery
-          : this.category === 'Strategies'
+          : category === 'Strategies'
           ? strategiesQuery
-          : measurementsQuery,
+          : category === 'Measurements'
+          ? measurementsQuery
+          : null,
     }
   },
   computed: {
@@ -73,6 +60,15 @@ export default {
         }, {})
       )
     },
+  },
+  created() {
+    this.category = this.$route.params.category
+    this.query =
+      this.category === 'Targets'
+        ? targetsQuery
+        : this.category === 'Strategies'
+        ? strategiesQuery
+        : measurementsQuery
   },
   apollo: {
     // this needs to match the key in results json. prefix the query with data: to alias the output
@@ -109,5 +105,11 @@ export default {
 .active {
   background: #35495e;
   color: white;
+}
+li.focus-area {
+  font-size: 1.2rem;
+}
+li.item {
+  font-size: 1rem;
 }
 </style>

@@ -34,12 +34,7 @@ export default {
     ],
   },
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [
-    'uikit/dist/css/uikit.min.css',
-    'uikit/dist/css/uikit.css',
-    '@assets/css/main.css',
-    'element-ui/lib/theme-chalk/index.css',
-  ],
+  css: ['@assets/css/main.css'],
 
   // for favicon
   pwa: {
@@ -48,11 +43,7 @@ export default {
     },
   },
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-    '@/plugins/element-ui',
-    '@/plugins/axios',
-    { src: '~/plugins/uikit.js', ssr: false },
-  ],
+  plugins: ['@/plugins/axios'],
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
@@ -88,9 +79,7 @@ export default {
   content: {},
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {
-    transpile: [/^element-ui/],
-  },
+  build: {},
   /*
    ** Auth module configuration
    ** See https://auth.nuxtjs.org/schemes/local.html#options

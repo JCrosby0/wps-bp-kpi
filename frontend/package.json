@@ -17,10 +17,8 @@
     "@nuxtjs/auth": "^4.9.1",
     "@nuxtjs/axios": "^5.12.5",
     "core-js": "^3.8.3",
-    "element-ui": "^2.15.0",
     "graphql": "^15.5.0",
-    "nuxt": "^2.14.12",
-    "uikit": "^3.6.17"
+    "nuxt": "^2.14.12"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^5.0.0",
