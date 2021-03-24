@@ -2,6 +2,9 @@
   <div>
     <div class="indicators">
       <h1>{{ focusArea }} Indicators</h1>
+      <div v-if="!indicators">
+        Waiting on server. This may take up to 30 seconds.
+      </div>
       <div class="arrange-cards">
         <Card
           v-for="(ind, i) in indicators"
@@ -28,6 +31,11 @@ export default {
       type: String,
       default: () => 'Category',
     },
+  },
+  data() {
+    return {
+      waitingOnServer: true,
+    }
   },
   computed: {
     focusArea() {

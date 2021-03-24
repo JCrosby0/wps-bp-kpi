@@ -2,6 +2,14 @@ query indicatorsFiltered($focusArea: String) {
   indicators(
     where: {
       performance_targets: { focus_area: { display_contains: $focusArea } }
+      or: {
+        measuring_successes: { focus_area: { display_contains: $focusArea } }
+        or: {
+          strategies_for_improvements: {
+            focus_area: { display_contains: $focusArea }
+          }
+        }
+      }
     }
   ) {
     name
