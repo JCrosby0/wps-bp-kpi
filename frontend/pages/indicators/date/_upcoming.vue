@@ -16,6 +16,9 @@
           <input v-model="dateEnd" type="date" name="dateEnd" />
         </div>
       </div>
+      <div v-if="!indicators">
+        Waiting on server. This may take up to 30 seconds.
+      </div>
       <div class="arrange-cards">
         <Card
           v-for="(ind, i) in indicators"

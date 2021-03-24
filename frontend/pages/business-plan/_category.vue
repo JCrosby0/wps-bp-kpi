@@ -3,6 +3,7 @@
     <h1 class="heading">
       {{ section }}
     </h1>
+    <div v-if="!data">Waiting on server. This may take up to 30 seconds.</div>
     <ul v-if="data">
       <li
         v-for="(key, i) in Object.keys(selectedCategory)"
