@@ -45,6 +45,18 @@
                 />
               </div>
             </div>
+            <div class="field">
+              <label class="label">Reenter Password</label>
+              <div class="control">
+                <input
+                  v-model="password2"
+                  type="password"
+                  class="input"
+                  name="password"
+                  required
+                />
+              </div>
+            </div>
             <div class="control">
               <button type="submit" class="space-top button--grey">
                 Register
@@ -74,12 +86,17 @@ export default {
       username: '',
       email: '',
       password: '',
+      password2: '',
       success: null,
       error: null,
     }
   },
   methods: {
     async register() {
+      if (this.password !== this.password2) {
+        this.error = 'Passwords do not match'
+        return
+      }
       this.error = null
       try {
         this.$axios.setToken(false)
