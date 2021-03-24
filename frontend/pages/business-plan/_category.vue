@@ -3,17 +3,23 @@
     <h1 class="heading">
       {{ section }}
     </h1>
-    <div v-if="!data">Waiting on server. This may take up to 30 seconds.</div>
-    <ul v-if="data">
+    <div v-if="$apollo.loading">
+      Waiting on server. This may take up to 30 seconds.
+    </div>
+    <div v-if="section === 'All (Search)'" class="search-input">
+      <label for="Search">Search: </label>
+      <input v-model="searchString" type="text" name="Search" />
+    </div>
+    <ul v-if="selectedCategory">
       <li
-        v-for="(key, i) in Object.keys(selectedCategory)"
+        v-for="(key, i) in Object.keys(activeCategory)"
         :key="'display-key-' + i"
         class="focus-area"
       >
         {{ key }}
         <ul>
           <li
-            v-for="(value, j) in selectedCategory[key]"
+            v-for="(value, j) in activeCategory[key]"
             :key="`display-key-${i}-value-${j}`"
             class="item"
           >
@@ -22,7 +28,6 @@
         </ul>
       </li>
     </ul>
-    <!-- {{ selectedCategory }} -->
   </div>
 </template>
 
@@ -30,6 +35,7 @@
 import measurementsQuery from '~/apollo/queries/business-plan/measurements'
 import strategiesQuery from '~/apollo/queries/business-plan/strategies'
 import targetsQuery from '~/apollo/queries/business-plan/targets'
+import search from '~/apollo/queries/business-plan/search'
 import businessPlanInfo from '~/assets/businessPlanInfo.json'
 export default {
   data() {
@@ -38,7 +44,8 @@ export default {
     return {
       businessPlanInfo,
       section,
-      category,
+      category: this.$route.params.category,
+      searchString: null,
       query:
         category === 'Targets'
           ? targetsQuery
@@ -46,14 +53,79 @@ export default {
           ? strategiesQuery
           : category === 'Measurements'
           ? measurementsQuery
+          : category === 'Search'
+          ? search
           : null,
     }
   },
   computed: {
+    routeCategory() {
+      return this.$route.params.category
+    },
+    activeCategory() {
+      return this.routeCategory === 'Search' && this.searchString
+        ? this.filteredCategory
+        : this.selectedCategory
+    },
+    filteredCategory() {
+      if (!this.searchString) return this.selectedCategory
+      return Object.entries(this.selectedCategory).reduce((acc, cur) => {
+        cur[1].forEach((val) => {
+          if (val.toLowerCase().includes(this.searchString.toLowerCase())) {
+            // check if the key already exists and push the value if it does
+            if (Object.keys(acc).includes(cur[0])) {
+              acc[cur[0]].push(val)
+              // otherwise create and assign it
+            } else {
+              acc[cur[0]] = [val]
+            }
+          }
+        })
+        return acc
+      }, {})
+    },
     selectedCategory() {
+      const data = []
+      switch (this.routeCategory) {
+        case 'Targets':
+          if (!this.performanceTargets || !this.performanceTargets.length) {
+            return
+          }
+          data.push(...this.performanceTargets)
+          break
+        case 'Strategies':
+          if (
+            !this.strategiesForImprovements ||
+            !this.strategiesForImprovements.length
+          ) {
+            return
+          }
+          data.push(...this.strategiesForImprovements)
+          break
+        case 'Measurements':
+          if (!this.measuringSuccesses || !this.measuringSuccesses.length) {
+            return
+          }
+          data.push(...this.measuringSuccesses)
+          break
+        case 'Search':
+          if (this.performanceTargets && this.performanceTargets.length) {
+            data.push(...this.performanceTargets)
+          }
+          if (
+            this.strategiesForImprovements &&
+            this.strategiesForImprovements.length
+          ) {
+            data.push(...this.strategiesForImprovements)
+          }
+          if (this.measuringSuccesses && this.measuringSuccesses.length) {
+            data.push(...this.measuringSuccesses)
+          }
+          break
+      }
       return (
-        this.data &&
-        this.data.reduce((acc, val) => {
+        data &&
+        data.reduce((acc, val) => {
           if (Object.keys(acc).includes(val.focus_area.display)) {
             acc[val.focus_area.display].push(val.value)
           } else {
@@ -65,7 +137,8 @@ export default {
     },
   },
   watch: {
-    category(n, o) {
+    routeCategory(n, o) {
+      this.searchString = null
       this.section = this.businessPlanInfo.find((i) => i.name === n).display
     },
   },
@@ -76,20 +149,52 @@ export default {
         ? targetsQuery
         : this.category === 'Strategies'
         ? strategiesQuery
+        : this.category === 'Search'
+        ? search
         : measurementsQuery
   },
   apollo: {
     // this needs to match the key in results json. prefix the query with data: to alias the output
-    data: {
-      prefetch: false,
-      query() {
-        // cannot use 'this' without making this a function
-        return this.query
-      },
-      // NYI
+    measuringSuccesses: {
+      prefetch: true,
+      query: measurementsQuery,
       variables() {
-        return { id: parseInt(this.$route.params.id) }
+        return { search: null }
       },
+      // TODO: can ammend the results in this way,
+      // TODO: need to propagate category through the data object through the rest of the page
+      // result({ data, loading, networkStatus }) {
+      //   data.measuringSuccesses = data.measuringSuccesses.map(
+      //     (n) => (n.category = 'Measurement')
+      //   )
+      //   return
+      // },
+    },
+    strategiesForImprovements: {
+      prefetch: true,
+      query: strategiesQuery,
+      variables() {
+        return { search: null }
+      },
+      // result({ data, loading, networkStatus }) {
+      //   data.strategiesForImprovements = data.strategiesForImprovements.map(
+      //     (n) => (n.category = 'Strategy')
+      //   )
+      //   return data
+      // },
+    },
+    performanceTargets: {
+      prefetch: true,
+      query: targetsQuery,
+      variables() {
+        return { search: null }
+      },
+      // result({ data, loading, networkStatus }) {
+      //   data.performanceTargets = data.performanceTargets.map(
+      //     (n) => (n.category = 'Target')
+      //   )
+      //   return data
+      // },
     },
   },
 }

@@ -1,0 +1,24 @@
+query bplanSearch($search: String) {
+  _and: data {
+    measuringSuccesses(where: { focus_area: { display_contains: $search } }) {
+      value
+      focus_area {
+        display
+      }
+    }
+    strategiesForImprovements(
+      where: { focus_area: { display_contains: $search } }
+    ) {
+      value
+      focus_area {
+        display
+      }
+    }
+    performanceTargets(where: { focus_area: { display_contains: $search } }) {
+      value
+      focus_area {
+        display
+      }
+    }
+  }
+}

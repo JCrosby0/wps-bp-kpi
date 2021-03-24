@@ -70,25 +70,6 @@ export default {
       tabs: [{ name: 'Info' }, { name: 'Metrics' }, { name: 'Results' }],
     }
   },
-  methods: {
-    // needleRotation(low, high, value) {
-    //   const normalised = (value - low) / (high - low)
-    //   const degrees = 90 * parseFloat(normalised) - 45
-    //   return `${parseInt(degrees)}deg`
-    // },
-    // status(color) {
-    //   switch (color) {
-    //     case 'green':
-    //       return '✔️'
-    //     case 'orange':
-    //       return '🔶'
-    //     case 'red':
-    //       return '🔴'
-    //     default:
-    //       return '0'
-    //   }
-    // },
-  },
 }
 </script>
 <style scoped>
@@ -109,6 +90,7 @@ export default {
   background: var(--color-orange);
   border-radius: 1rem 1rem 0 0;
   flex: 0 0 50px;
+  box-sizing: border-box;
 }
 .header h3 {
   margin-bottom: 0;
@@ -122,7 +104,7 @@ export default {
   flex: 1 0 150px;
 }
 .footer {
-  flex: 0 0 41px;
+  flex: 0 0 33px;
 }
 
 .tabs {
@@ -137,7 +119,7 @@ export default {
   border: 1px grey solid;
   background: #cdcdcd;
   width: 100%;
-  height: 100%;
+  /* height: 41px; */
   text-align: center;
   padding: 0.5rem;
   border-bottom: none;

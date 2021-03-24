@@ -1,5 +1,7 @@
-query strategies {
-  data: strategiesForImprovements {
+query strategies($search: String) {
+  strategiesForImprovements(
+    where: { focus_area: { display_contains: $search } }
+  ) {
     value
     focus_area {
       display

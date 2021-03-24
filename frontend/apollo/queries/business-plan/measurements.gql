@@ -1,5 +1,5 @@
-query measurements {
-  data: measuringSuccesses {
+query measurements($search: String) {
+  measuringSuccesses(where: { focus_area: { display_contains: $search } }) {
     value
     focus_area {
       display

@@ -9,9 +9,6 @@
         />
       </nuxt-link>
       <div class="title">Business Plan KPIs</div>
-      <!-- <div class="auth">
-        <navAuth />
-      </div> -->
       <div class="links" @click="showMenu = !showMenu"></div>
     </div>
     <transition name="slide-fade">

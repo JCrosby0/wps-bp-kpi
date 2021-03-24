@@ -1,5 +1,5 @@
-query targets {
-  data: performanceTargets {
+query targets($search: String) {
+  performanceTargets(where: { focus_area: { display_contains: $search } }) {
     value
     focus_area {
       display

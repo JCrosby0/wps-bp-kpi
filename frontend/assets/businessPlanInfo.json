@@ -1,5 +1,6 @@
 [
 { "name": "Strategies", "to": "/strategies", "display": "Strategies for Improvement" },
 { "name": "Measurements", "to": "/measurements", "display": "Measuring Success" },
-{ "name": "Targets", "to": "/targets", "display": "Performance Targets" }
+{ "name": "Targets", "to": "/targets", "display": "Performance Targets" },
+{ "name": "Search", "to": "/search", "display": "All (Search)" }
 ]
