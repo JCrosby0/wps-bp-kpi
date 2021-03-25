@@ -1,0 +1,7 @@
+query indicatorsCount {
+  indicatorsConnection {
+    aggregate {
+      count
+    }
+  }
+}

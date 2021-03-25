@@ -45,7 +45,8 @@
       "collection": "measuring-success"
     },
     "performance_targets": {
-      "collection": "performance-target"
+      "collection": "performance-target",
+      "via": "indicator"
     },
     "strategies_for_improvements": {
       "collection": "strategies-for-improvement"
@@ -56,6 +57,20 @@
         "Qualitative",
         "Quantitative"
       ]
+    },
+    "boardDateLastNoted": {
+      "type": "date"
+    },
+    "boardStatusProgress": {
+      "type": "enumeration",
+      "enum": [
+        "Success",
+        "Warning",
+        "Failure"
+      ]
+    },
+    "boardStatusAchieved": {
+      "type": "boolean"
     }
   }
 }

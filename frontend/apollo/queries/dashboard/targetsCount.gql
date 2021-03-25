@@ -1,0 +1,7 @@
+query targetsCount {
+  performanceTargetsConnection {
+    aggregate {
+      count
+    }
+  }
+}

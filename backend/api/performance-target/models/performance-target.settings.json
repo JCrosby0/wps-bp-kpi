@@ -16,6 +16,10 @@
     "focus_area": {
       "via": "performance_targets",
       "model": "drivers"
+    },
+    "indicator": {
+      "via": "performance_targets",
+      "model": "indicators"
     }
   }
 }

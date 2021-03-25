@@ -6,6 +6,7 @@
         Success Measurements and Performance Targets along with indicators
         showing progress towards achieving the Business Plan's goals
       </p>
+      <Dashboard></Dashboard>
       <p class="notification">
         Please note: the server sleeps when idle, and may take up to 20 seconds
         to respond when waking up. Please be patient!
@@ -26,7 +27,6 @@
         </ul>
         <h6>Planned Features:</h6>
         <ul>
-          <li>Strategies, Measurements and Targets searchable / filterable</li>
           <li>View Indicators by latest update</li>
           <li>
             Add additional tab to indicators: evidence (links to supporting /
@@ -40,7 +40,14 @@
     </div>
   </div>
 </template>
-
+<script>
+import Dashboard from '~/components/Dashboard'
+export default {
+  components: {
+    Dashboard,
+  },
+}
+</script>
 <style>
 .container {
   height: 100%;

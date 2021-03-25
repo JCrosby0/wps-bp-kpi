@@ -10,4 +10,7 @@ module.exports = ({ env }) => ({
       testAddress: 'josephbcrosby+testemail@gmail.com',
     },
   },
+  graphql: {
+    playgroundAlways: true
+  }
 });

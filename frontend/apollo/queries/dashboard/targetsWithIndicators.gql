@@ -1,0 +1,12 @@
+query targetsWithIndicators {
+  performanceTargets(where: { indicator_null: false }) {
+    value
+    focus_area {
+      display
+    }
+    indicator {
+      id
+      name
+    }
+  }
+}
