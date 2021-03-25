@@ -63,7 +63,7 @@
             </nuxt-link>
           </div>
           <div v-if="isAuthenticated" class="authenticated">
-            <div class="span-label">View Indicators by Date:</div>
+            <div class="span-label">View Indicators by Review Date:</div>
             <nuxt-link
               v-for="link in upcomingIndicators"
               :key="link.display"
@@ -266,7 +266,7 @@ export default {
 }
 
 .span-label {
-  width: 250px;
+  width: 275px;
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
 }

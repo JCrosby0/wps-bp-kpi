@@ -10,6 +10,7 @@ query indicatorsByDate($dateStart: DateTime, $dateEnd: DateTime) {
     rangeLow
     rangeHigh
     focalPoint
+    updatedAt
     description
     dateAvailable
     stepsToSuccess

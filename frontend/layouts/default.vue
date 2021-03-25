@@ -43,10 +43,10 @@ html {
   flex-direction: column;
 }
 .default-nav {
-  flex: 0 0 132px;
+  flex: 0 0 80px;
 }
 .default-main {
-  height: 1 1 auto;
+  flex: 1 1 auto;
   overflow: auto;
 }
 *,

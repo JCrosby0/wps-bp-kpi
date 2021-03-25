@@ -12,6 +12,7 @@
       }"
     ></div>
     <div
+      v-show="content.value"
       class="jcg-needle"
       :style="{
         '--needle-rotation': needleRotation(

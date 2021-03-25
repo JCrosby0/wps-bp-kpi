@@ -8,6 +8,7 @@ query Indicators {
     rangeLow
     rangeHigh
     focalPoint
+    updatedAt
     description
     dateAvailable
     stepsToSuccess

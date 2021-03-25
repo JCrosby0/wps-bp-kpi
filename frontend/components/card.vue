@@ -81,14 +81,14 @@ export default {
   margin: 0.5rem;
   display: flex;
   width: clamp(300px, 23%, 50%);
-  height: clamp(300px, 30%, 50%);
+  height: clamp(300px, 40%, 50%);
   flex-direction: column;
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.3);
 }
 .header {
   padding: 1rem;
   background: var(--color-orange);
-  border-radius: 1rem 1rem 0 0;
+  border-radius: 0.9rem 0.9rem 0 0;
   flex: 0 0 50px;
   box-sizing: border-box;
 }

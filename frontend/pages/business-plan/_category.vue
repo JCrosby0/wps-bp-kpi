@@ -4,30 +4,17 @@
       {{ section }}
     </h1>
     <div v-if="$apollo.loading">
-      Waiting on server. This may take up to 30 seconds.
+      <span>{{ waitingMessage }}</span>
     </div>
     <div v-if="section === 'All (Search)'" class="search-input">
       <label for="Search">Search: </label>
       <input v-model="searchString" type="text" name="Search" />
     </div>
-    <ul v-if="selectedCategory">
-      <li
-        v-for="(key, i) in Object.keys(activeCategory)"
-        :key="'display-key-' + i"
-        class="focus-area"
-      >
-        {{ key }}
-        <ul>
-          <li
-            v-for="(value, j) in activeCategory[key]"
-            :key="`display-key-${i}-value-${j}`"
-            class="item"
-          >
-            {{ value }}
-          </li>
-        </ul>
-      </li>
-    </ul>
+    <listItems
+      v-if="$apolloData.data[dataKey]"
+      :data="$apolloData.data[dataKey]"
+    />
+    <listItems v-else-if="routeCategory === 'Search'" :data="combinedData" />
   </div>
 </template>
 
@@ -35,104 +22,80 @@
 import measurementsQuery from '~/apollo/queries/business-plan/measurements'
 import strategiesQuery from '~/apollo/queries/business-plan/strategies'
 import targetsQuery from '~/apollo/queries/business-plan/targets'
-import search from '~/apollo/queries/business-plan/search'
+import searchQuery from '~/apollo/queries/business-plan/search'
 import businessPlanInfo from '~/assets/businessPlanInfo.json'
+import listItems from '~/components/listItems.vue'
+
+// functions
+// add the category as a key:value to the object
+function addCategory(data) {
+  const dict = {
+    measuringSuccesses: 'Measurement',
+    strategiesForImprovements: 'Strategy',
+    performanceTargets: 'Target',
+  }
+  Object.keys(data).forEach((key) => {
+    data[key].map((n) => (n.category = dict[key]))
+  })
+  return data
+}
+// go from focus_area.display = value to focus_area = value
+function flattenFocusArea(data) {
+  Object.keys(data).forEach((key) => {
+    data[key].forEach((n) => {
+      n.focus_area = n.focus_area?.display || n.focus_area
+    })
+  })
+  return data
+}
+
+// when iterating, only return true if its the first instance of a value
+function onlyUnique(value, index, self) {
+  return self.indexOf(value) === index
+}
 export default {
+  components: { listItems },
   data() {
     const category = this.$route.params.category
     const section = businessPlanInfo.find((i) => i.name === category).display
     return {
+      waitingMessage: 'Communicating with Server...',
       businessPlanInfo,
       section,
       category: this.$route.params.category,
       searchString: null,
-      query:
-        category === 'Targets'
-          ? targetsQuery
-          : category === 'Strategies'
-          ? strategiesQuery
-          : category === 'Measurements'
-          ? measurementsQuery
-          : category === 'Search'
-          ? search
-          : null,
+      emoji: {
+        Strategy: '✍️',
+        Measurement: '📏',
+        Target: '🎯',
+      },
     }
   },
   computed: {
+    // so that we can watch the route for changes
+    // need a way to trigger on navigation change as the page is the same
     routeCategory() {
       return this.$route.params.category
     },
-    activeCategory() {
-      return this.routeCategory === 'Search' && this.searchString
-        ? this.filteredCategory
-        : this.selectedCategory
-    },
-    filteredCategory() {
-      if (!this.searchString) return this.selectedCategory
-      return Object.entries(this.selectedCategory).reduce((acc, cur) => {
-        cur[1].forEach((val) => {
-          if (val.toLowerCase().includes(this.searchString.toLowerCase())) {
-            // check if the key already exists and push the value if it does
-            if (Object.keys(acc).includes(cur[0])) {
-              acc[cur[0]].push(val)
-              // otherwise create and assign it
-            } else {
-              acc[cur[0]] = [val]
-            }
-          }
-        })
-        return acc
-      }, {})
-    },
-    selectedCategory() {
-      const data = []
-      switch (this.routeCategory) {
-        case 'Targets':
-          if (!this.performanceTargets || !this.performanceTargets.length) {
-            return
-          }
-          data.push(...this.performanceTargets)
-          break
-        case 'Strategies':
-          if (
-            !this.strategiesForImprovements ||
-            !this.strategiesForImprovements.length
-          ) {
-            return
-          }
-          data.push(...this.strategiesForImprovements)
-          break
-        case 'Measurements':
-          if (!this.measuringSuccesses || !this.measuringSuccesses.length) {
-            return
-          }
-          data.push(...this.measuringSuccesses)
-          break
-        case 'Search':
-          if (this.performanceTargets && this.performanceTargets.length) {
-            data.push(...this.performanceTargets)
-          }
-          if (
-            this.strategiesForImprovements &&
-            this.strategiesForImprovements.length
-          ) {
-            data.push(...this.strategiesForImprovements)
-          }
-          if (this.measuringSuccesses && this.measuringSuccesses.length) {
-            data.push(...this.measuringSuccesses)
-          }
-          break
+    // use route category to get relevant data key
+    dataKey() {
+      const dict = {
+        Strategies: 'strategiesForImprovements',
+        Measurements: 'measuringSuccesses',
+        Targets: 'performanceTargets',
       }
-      return (
-        data &&
-        data.reduce((acc, val) => {
-          if (Object.keys(acc).includes(val.focus_area.display)) {
-            acc[val.focus_area.display].push(val.value)
-          } else {
-            acc[val.focus_area.display] = [val.value]
-          }
-          return acc
-        }, {})
+      return dict[this.routeCategory]
+    },
+    combinedData() {
+      if (this.$apolloData.loading) {
+        return []
+      }
+      return [
+        ...this.$apolloData?.data?.strategiesForImprovements,
+        ...this.$apolloData?.data?.measuringSuccesses,
+        ...this.$apolloData?.data?.performanceTargets,
+      ].filter((n) =>
+        this.searchString ? n.value?.includes(this.searchString) : true
       )
     },
   },
@@ -144,14 +107,11 @@ export default {
   },
   created() {
     this.category = this.$route.params.category
-    this.query =
-      this.category === 'Targets'
-        ? targetsQuery
-        : this.category === 'Strategies'
-        ? strategiesQuery
-        : this.category === 'Search'
-        ? search
-        : measurementsQuery
+  },
+  methods: {
+    onlyUnique(value, index, self) {
+      return onlyUnique(value, index, self)
+    },
   },
   apollo: {
     // this needs to match the key in results json. prefix the query with data: to alias the output
@@ -163,12 +123,10 @@ export default {
       },
       // TODO: can ammend the results in this way,
       // TODO: need to propagate category through the data object through the rest of the page
-      // result({ data, loading, networkStatus }) {
-      //   data.measuringSuccesses = data.measuringSuccesses.map(
-      //     (n) => (n.category = 'Measurement')
-      //   )
-      //   return
-      // },
+      result({ data, loading, networkStatus }) {
+        data = addCategory(data)
+        data = flattenFocusArea(data)
+      },
     },
     strategiesForImprovements: {
       prefetch: true,
@@ -176,12 +134,10 @@ export default {
       variables() {
         return { search: null }
       },
-      // result({ data, loading, networkStatus }) {
-      //   data.strategiesForImprovements = data.strategiesForImprovements.map(
-      //     (n) => (n.category = 'Strategy')
-      //   )
-      //   return data
-      // },
+      result({ data, loading, networkStatus }) {
+        data = addCategory(data)
+        data = flattenFocusArea(data)
+      },
     },
     performanceTargets: {
       prefetch: true,
@@ -189,12 +145,23 @@ export default {
       variables() {
         return { search: null }
       },
-      // result({ data, loading, networkStatus }) {
-      //   data.performanceTargets = data.performanceTargets.map(
-      //     (n) => (n.category = 'Target')
-      //   )
-      //   return data
-      // },
+      result({ data, loading, networkStatus }) {
+        data = addCategory(data)
+        data = flattenFocusArea(data)
+      },
+    },
+    search: {
+      skip: true,
+      prefetch: false,
+      query: searchQuery,
+      result({ data }) {
+        data = [
+          ...this.$apolloData.data.measuringSuccesses,
+          ...this.$apolloData.data.strategiesForImprovements,
+          ...this.$apolloData.data.performanceTargets,
+        ]
+        return data
+      },
     },
   },
 }
@@ -218,11 +185,5 @@ export default {
 .active {
   background: #35495e;
   color: white;
-}
-li.focus-area {
-  font-size: 1.2rem;
-}
-li.item {
-  font-size: 1rem;
 }
 </style>
