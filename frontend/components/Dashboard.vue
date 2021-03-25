@@ -13,7 +13,7 @@
       performance targets.<br />
       There are
       <span class="highlight orange">
-        {{ $apolloData.data.targetsWithIndicators.aggregate.count }}
+        {{ $apolloData.data.targetsIndicators.aggregate.count }}
       </span>
       performance targets missing indicators.<br />
       So far,
@@ -60,7 +60,7 @@ export default {
       prefetch: true,
       query: targetsCount,
     },
-    targetsWithIndicators: {
+    targetsIndicators: {
       prefetch: true,
       query: targetsWithIndicators,
     },

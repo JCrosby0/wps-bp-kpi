@@ -1,10 +1,9 @@
 query targetsWithIndicators {
-  targetsWithIndicators: performanceTargetConnection(
+  targetsIndicators: performanceTargetsConnection(
     where: { indicator_null: true }
   ) {
     aggregate {
       count
-      totalCount
     }
   }
 }
