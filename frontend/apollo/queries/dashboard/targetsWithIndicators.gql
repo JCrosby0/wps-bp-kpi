@@ -1,12 +1,10 @@
 query targetsWithIndicators {
-  performanceTargets(where: { indicator_null: false }) {
-    value
-    focus_area {
-      display
-    }
-    indicator {
-      id
-      name
+  targetsWithIndicators: performanceTargetConnection(
+    where: { indicator_null: true }
+  ) {
+    aggregate {
+      count
+      totalCount
     }
   }
 }

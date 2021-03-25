@@ -1,5 +1,5 @@
 query targetsCount {
-  performanceTargetsConnection {
+  targets: performanceTargetsConnection {
     aggregate {
       count
     }

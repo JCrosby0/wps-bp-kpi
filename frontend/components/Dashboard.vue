@@ -4,24 +4,31 @@
     <p v-if="!$apolloData.loading">
       There are currently
       <span class="highlight red">
-        {{ $apolloData.data.indicatorsConnection.aggregate.count }}
+        {{ $apolloData.data.indicators.aggregate.count }}
       </span>
       indicators and
       <span class="highlight green">
-        {{ $apolloData.data.performanceTargetsConnection.aggregate.count }}
+        {{ $apolloData.data.targets.aggregate.count }}
       </span>
       performance targets.<br />
       There are
       <span class="highlight orange">
-        {{ $apolloData.data.performanceTargets }}
+        {{ $apolloData.data.targetsWithIndicators.aggregate.count }}
       </span>
       performance targets missing indicators.<br />
       So far,
-      {{ 'N/A' }}
-      indicators have been noted by the board.<br />
-      Of these,
-      {{ 'N/A' }}
-      are complete, and {{ 'N/A' }} are in progress.
+      <span class="highlight red">
+        {{ $apolloData.data.noted.aggregate.count }}
+      </span>
+      indicators have been noted by the board:<br />
+      <span class="highlight red">
+        {{ $apolloData.data.complete.aggregate.count }}
+      </span>
+      are complete, and
+      <span class="highlight red">
+        {{ $apolloData.data.progress.aggregate.count }}
+      </span>
+      are in progress.
     </p>
   </div>
 </template>
@@ -30,6 +37,9 @@
 import indicatorsCount from '~/apollo/queries/dashboard/indicatorsCount.gql'
 import targetsCount from '~/apollo/queries/dashboard/targetsCount.gql'
 import targetsWithIndicators from '~/apollo/queries/dashboard/targetsWithIndicators.gql'
+import boardNoted from '~/apollo/queries/dashboard/indicatorsNotedByBoard.gql'
+import boardComplete from '~/apollo/queries/dashboard/boardComplete.gql'
+import boardProgress from '~/apollo/queries/dashboard/boardProgress.gql'
 export default {
   computed: {
     // difference() {
@@ -42,17 +52,29 @@ export default {
     // },
   },
   apollo: {
-    indicatorsConnection: {
+    indicators: {
       prefetch: true,
       query: indicatorsCount,
     },
-    performanceTargetsConnection: {
+    targets: {
       prefetch: true,
       query: targetsCount,
     },
-    performanceTargets: {
-      prefetch: false,
+    targetsWithIndicators: {
+      prefetch: true,
       query: targetsWithIndicators,
+    },
+    noted: {
+      prefetch: true,
+      query: boardNoted,
+    },
+    complete: {
+      prefetch: true,
+      query: boardComplete,
+    },
+    progress: {
+      prefetch: true,
+      query: boardProgress,
     },
   },
 }

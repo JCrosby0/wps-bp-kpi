@@ -61,15 +61,10 @@
     "boardDateLastNoted": {
       "type": "date"
     },
-    "boardStatusProgress": {
-      "type": "enumeration",
-      "enum": [
-        "Success",
-        "Warning",
-        "Failure"
-      ]
-    },
     "boardStatusAchieved": {
+      "type": "boolean"
+    },
+    "boardStatusProgressNoted": {
       "type": "boolean"
     }
   }

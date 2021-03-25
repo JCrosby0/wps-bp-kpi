@@ -1,0 +1,7 @@
+query indicatorsNoted {
+  progress: indicatorsConnection(where: { boardStatusProgressNoted: true }) {
+    aggregate {
+      count
+    }
+  }
+}
