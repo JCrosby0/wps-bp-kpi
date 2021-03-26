@@ -47,7 +47,7 @@ html {
   flex: 0 0 80px;
 }
 .default-main {
-  flex: 1 1 auto;
+  flex: 1 1 calc(100vh - 80px);
   overflow: auto;
 }
 *,

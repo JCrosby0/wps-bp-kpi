@@ -1,31 +1,27 @@
 <template>
   <div class="card-board">
     <div class="label">Date Last Noted:</div>
-    <div class="value">{{ dateNoted }}</div>
+    <div class="value">{{ content.boardDateLastNoted || 'Not yet noted' }}</div>
     <div class="label">Completion:</div>
-    <div class="value">{{ complete }}</div>
+    <div class="value">{{ content.boardStatusAchieved || 'Incomplete' }}</div>
     <div class="label">Progress:</div>
-    <div class="value">{{ progress }}</div>
+    <div class="value">{{ content.boardStatusProgress || 'Not started' }}</div>
   </div>
 </template>
 
 <script>
 export default {
   props: {
-    dateNoted: {
-      type: String,
-      required: false,
-      default: () => 'Not yet noted',
-    },
-    complete: {
-      type: String,
-      required: false,
-      default: () => 'Not complete',
-    },
-    progress: {
-      type: String,
-      required: false,
-      default: () => 'Not yet started',
+    content: {
+      type: Object,
+      required: true,
+      default: () => {
+        return {
+          boardDateLastNoted: 'Not yet noted',
+          boardStatusProgress: 'Not yet started',
+          boardStatusAchieved: 'Not complete',
+        }
+      },
     },
   },
 }
@@ -42,5 +38,6 @@ export default {
 }
 .value {
   flex: 0 0 50%;
+  color: red;
 }
 </style>

@@ -57,4 +57,8 @@ li.item {
   font-size: 1rem;
   list-style-type: none;
 }
+
+ul {
+  padding-left: 1rem;
+}
 </style>

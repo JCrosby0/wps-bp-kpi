@@ -20,6 +20,9 @@ query indicatorsFiltered($focusArea: String) {
     description
     dateAvailable
     stepsToSuccess
+    boardDateLastNoted
+    boardStatusAchieved
+    boardStatusProgressNoted
     measuring_successes {
       value
     }

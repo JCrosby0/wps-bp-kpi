@@ -20,7 +20,7 @@
       </div>
       <div v-show="activeTab === 2" class="tab-results">
         <div class="title">Board Review:</div>
-        <CardBoard /><br />
+        <CardBoard :content="content" /><br />
         <div class="title">Summary:</div>
         <CardQuali
           v-if="content.type == 'Qualitative'"

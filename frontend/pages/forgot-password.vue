@@ -21,7 +21,8 @@
               </div>
             </div>
             <div class="control">
-              <button type="submit" class="button--grey space-top">
+              <Spinner v-if="waiting" />
+              <button v-else type="submit" class="button--grey space-top">
                 Email me a reset link
               </button>
             </div>
@@ -34,14 +35,17 @@
 
 <script>
 import Notification from '~/components/notification'
+import Spinner from '~/components/spinner'
 
 export default {
   components: {
     Notification,
+    Spinner,
   },
   middleware: 'guest',
   data() {
     return {
+      waiting: false,
       email: '',
       success: null,
       error: null,
@@ -49,15 +53,21 @@ export default {
   },
   methods: {
     async forgotPassword() {
+      this.waiting = true
+      this.error = null
       try {
         await this.$axios.post('auth/forgot-password', {
           email: this.email,
         })
-        this.error = null
         this.success = `A reset password link has been sent to your email account. \
  Please click on the link to complete the password reset.`
+        this.waiting = false
       } catch (e) {
-        this.error = e.response.data.message[0].messages[0].message
+        console.log('e.response', e.response)
+        this.error =
+          e.response.data.message[0]?.messages[0]?.message ||
+          e.response.data.message.code
+        this.waiting = false
       }
     },
   },

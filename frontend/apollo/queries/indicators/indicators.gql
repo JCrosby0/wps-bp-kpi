@@ -12,6 +12,9 @@ query Indicators {
     description
     dateAvailable
     stepsToSuccess
+    boardDateLastNoted
+    boardStatusAchieved
+    boardStatusProgressNoted
     measuring_successes {
       value
     }

@@ -1,42 +1,45 @@
 <template>
-  <div class="container">
-    <div class="main">
-      <p class="description">
-        This portal provides a queriable summary of Strategies for Improvement,
-        Success Measurements and Performance Targets along with indicators
-        showing progress towards achieving the Business Plan's goals
-      </p>
-      <Dashboard></Dashboard>
-      <p class="notification">
-        Please note: the server sleeps when idle, and may take up to 20 seconds
-        to respond when waking up. Please be patient!
-      </p>
-      <div class="left">
-        <h6>Known Issues:</h6>
-        <ul>
-          <li>
-            Refreshing a page may display a page not found error. Go back to
-            wps-bp-kpi.netlify.app and Use the menu to navigate back to the
-            desired page.
-          </li>
-          <li>
-            Emails are not currently being sent out when with account
-            registration validation or password reset requests. Contact Joe for
-            manual account validation.
-          </li>
-        </ul>
-        <h6>Planned Features:</h6>
-        <ul>
-          <li>View Indicators by latest update</li>
-          <li>
-            Add additional tab to indicators: evidence (links to supporting /
-            relevant activities)
-          </li>
-        </ul>
+  <div>
+    <div class="container">
+      <div class="main">
+        <p class="description">
+          This portal provides a queriable summary of Strategies for
+          Improvement, Success Measurements and Performance Targets along with
+          indicators showing progress towards achieving the Business Plan's
+          goals
+        </p>
+        <Dashboard></Dashboard>
+        <p class="notification">
+          Please note: the server sleeps when idle, and may take up to 20
+          seconds to respond when waking up. Please be patient!
+        </p>
+        <div class="left">
+          <h6>Known Issues:</h6>
+          <ul>
+            <li>
+              Refreshing a page may display a page not found error. Go back to
+              wps-bp-kpi.netlify.app and Use the menu to navigate back to the
+              desired page.
+            </li>
+            <li>
+              Emails are not currently being sent out when with account
+              registration validation or password reset requests. Contact Joe
+              for manual account validation.
+            </li>
+          </ul>
+          <h6>Planned Features:</h6>
+          <ul>
+            <li>View Indicators by latest update</li>
+            <li>
+              Add additional tab to indicators: evidence (links to supporting /
+              relevant activities)
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
-    <div class="footer">
-      <p>Created by Crosby Solutions, 2021</p>
+      <div class="footer">
+        <p>Created by Crosby Solutions, 2021</p>
+      </div>
     </div>
   </div>
 </template>
@@ -54,7 +57,7 @@ export default {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 }
 .main {
@@ -84,5 +87,11 @@ export default {
 
 .notification {
   padding: 1rem;
+}
+
+@media only screen and (max-width: 550px) {
+  .description {
+    font-size: 0.8rem;
+  }
 }
 </style>

@@ -1,35 +1,41 @@
 <template>
   <div class="dashboard">
     <p v-if="$apolloData.loading"><Spinner /><br />Retrieving data...</p>
-    <p v-if="!$apolloData.loading">
-      There are currently
-      <span class="highlight red">
-        {{ $apolloData.data.indicators.aggregate.count }}
-      </span>
-      indicators and
-      <span class="highlight green">
-        {{ $apolloData.data.targets.aggregate.count }}
-      </span>
-      performance targets.<br />
-      There are
-      <span class="highlight orange">
-        {{ $apolloData.data.targetsIndicators.aggregate.count }}
-      </span>
-      performance targets not linked to indicators.<br />
-      So far, WPS has presented progress towards
-      <span class="highlight red">
-        {{ $apolloData.data.noted.aggregate.count }}
-      </span>
-      performance targets to the board:
-      <span class="highlight red">
-        {{ $apolloData.data.complete.aggregate.count }}
-      </span>
-      are complete, and
-      <span class="highlight red">
-        {{ $apolloData.data.progress.aggregate.count }}
-      </span>
-      are in progress.
-    </p>
+    <div v-if="!$apolloData.loading">
+      <p>
+        There are currently
+        <span class="highlight red">
+          {{ $apolloData.data.indicators.aggregate.count }}
+        </span>
+        indicators and
+        <span class="highlight green">
+          {{ $apolloData.data.targets.aggregate.count }}
+        </span>
+        performance targets.
+      </p>
+      <p>
+        There are
+        <span class="highlight orange">
+          {{ $apolloData.data.targetsIndicators.aggregate.count }}
+        </span>
+        performance targets not linked to indicators.
+      </p>
+      <p>
+        Progress towards
+        <span class="highlight red">
+          {{ $apolloData.data.noted.aggregate.count }}
+        </span>
+        performance targets has been presented to the board:<br />
+        <span class="highlight red">
+          {{ $apolloData.data.complete.aggregate.count }}
+        </span>
+        are complete, and
+        <span class="highlight red">
+          {{ $apolloData.data.progress.aggregate.count }}
+        </span>
+        are in progress.
+      </p>
+    </div>
   </div>
 </template>
 
@@ -93,5 +99,13 @@ export default {
 }
 .red {
   color: red;
+}
+@media only screen and (max-width: 550px) {
+  .dashboard {
+    font-size: 1.2rem;
+  }
+  .highlight {
+    font-size: 1.5rem;
+  }
 }
 </style>

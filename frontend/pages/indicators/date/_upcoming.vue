@@ -16,8 +16,9 @@
           <input v-model="dateEnd" type="date" name="dateEnd" />
         </div>
       </div>
-      <div v-if="!indicators"><Spinner /><br />Retrieving data...</div>
-      <div class="arrange-cards">
+      <div v-if="$apolloData.loading"><Spinner /><br />Retrieving data...</div>
+      <div v-else-if="!indicators">No data was retrieved</div>
+      <div v-else class="arrange-cards">
         <Card
           v-for="(ind, i) in indicators"
           :key="'indicator-' + i"
