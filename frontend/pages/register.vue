@@ -57,8 +57,14 @@
                 />
               </div>
             </div>
-            <div class="control">
-              <button type="submit" class="space-top button--grey">
+            <div class="control button-control">
+              <Spinner v-if="loading" />
+              <button
+                v-else
+                type="submit"
+                class="space-top button--grey"
+                @click.prevent="register"
+              >
                 Register
               </button>
             </div>
@@ -75,14 +81,17 @@
 
 <script>
 import Notification from '~/components/notification'
+import Spinner from '~/components/spinner.vue'
 
 export default {
   components: {
     Notification,
+    Spinner,
   },
   middleware: 'guest',
   data() {
     return {
+      loading: false,
       username: '',
       email: '',
       password: '',
@@ -97,6 +106,7 @@ export default {
         this.error = 'Passwords do not match'
         return
       }
+      this.loading = true
       this.error = null
       try {
         this.$axios.setToken(false)
@@ -107,8 +117,15 @@ export default {
         })
         this.success = `A confirmation link has been sent to your email account. \
  Please click on the link to complete the registration process.`
+        this.loading = false
       } catch (e) {
-        this.error = e.response.data.message[0].messages[0].message
+        console.log('e: ', e.response)
+        this.loading = false
+        this.error =
+          e.response.data.message[0]?.messages[0]?.message ||
+          e.response.data.data[0]?.messages[0]?.message ||
+          e.response.data.message.code ||
+          'An unknown error occurred'
       }
     },
   },
@@ -128,5 +145,9 @@ export default {
 .input {
   width: 100%;
   height: 2rem;
+}
+.button-control {
+  height: 80px;
+  padding: 1rem;
 }
 </style>

@@ -2,9 +2,7 @@
   <div>
     <div class="indicators">
       <h1>{{ focusArea }} Indicators</h1>
-      <div v-if="!indicators">
-        Waiting on server. This may take up to 30 seconds.
-      </div>
+      <div v-if="$apolloData.loading"><Spinner /><br />Retrieving data...</div>
       <div class="arrange-cards">
         <Card
           v-for="(ind, i) in indicators"
@@ -23,8 +21,9 @@
 <script>
 import Card from '~/components/card'
 import indicatorsFilteredQuery from '~/apollo/queries/indicators/indicatorsFiltered'
+import Spinner from '~/components/spinner'
 export default {
-  components: { Card },
+  components: { Card, Spinner },
   props: {
     category: {
       required: false,
@@ -58,6 +57,7 @@ export default {
 <style scoped>
 .indicators {
   padding: 1rem;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-content: flex-start;

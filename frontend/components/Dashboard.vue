@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard">
-    <p v-if="$apolloData.loading">Data is loading... please wait</p>
+    <p v-if="$apolloData.loading"><Spinner /><br />Retrieving data...</p>
     <p v-if="!$apolloData.loading">
       There are currently
       <span class="highlight red">
@@ -15,12 +15,12 @@
       <span class="highlight orange">
         {{ $apolloData.data.targetsIndicators.aggregate.count }}
       </span>
-      performance targets missing indicators.<br />
-      So far,
+      performance targets not linked to indicators.<br />
+      So far, WPS has presented progress towards
       <span class="highlight red">
         {{ $apolloData.data.noted.aggregate.count }}
       </span>
-      indicators have been noted by the board:<br />
+      performance targets to the board:
       <span class="highlight red">
         {{ $apolloData.data.complete.aggregate.count }}
       </span>
@@ -40,16 +40,10 @@ import targetsWithIndicators from '~/apollo/queries/dashboard/targetsWithIndicat
 import boardNoted from '~/apollo/queries/dashboard/indicatorsNotedByBoard.gql'
 import boardComplete from '~/apollo/queries/dashboard/boardComplete.gql'
 import boardProgress from '~/apollo/queries/dashboard/boardProgress.gql'
+import Spinner from '~/components/spinner'
 export default {
-  computed: {
-    // difference() {
-    //   if (this.$apolloData.loading) return null
-    //   const diff =
-    //     parseInt(
-    //       this.$apolloData.data.performanceTargetsConnection.aggregate.count
-    //     ) - parseInt(this.$apolloData.data.indicatorsConnection.aggregate.count)
-    //   return diff
-    // },
+  components: {
+    Spinner,
   },
   apollo: {
     indicators: {

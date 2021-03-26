@@ -3,9 +3,7 @@
     <h1 class="heading">
       {{ section }}
     </h1>
-    <div v-if="$apollo.loading">
-      <span>{{ waitingMessage }}</span>
-    </div>
+    <div v-if="$apollo.loading"><Spinner /><br />Retrieving data...</div>
     <div v-if="section === 'All (Search)'" class="search-input">
       <label for="Search">Search: </label>
       <input v-model="searchString" type="text" name="Search" />
@@ -25,6 +23,7 @@ import targetsQuery from '~/apollo/queries/business-plan/targets'
 import searchQuery from '~/apollo/queries/business-plan/search'
 import businessPlanInfo from '~/assets/businessPlanInfo.json'
 import listItems from '~/components/listItems.vue'
+import Spinner from '~/components/spinner'
 
 // functions
 // add the category as a key:value to the object
@@ -54,7 +53,7 @@ function onlyUnique(value, index, self) {
   return self.indexOf(value) === index
 }
 export default {
-  components: { listItems },
+  components: { listItems, Spinner },
   data() {
     const category = this.$route.params.category
     const section = businessPlanInfo.find((i) => i.name === category).display

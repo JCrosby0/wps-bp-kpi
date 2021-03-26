@@ -20,3 +20,11 @@ export default {
   },
 }
 </script>
+<style scoped>
+.is-danger {
+  color: red;
+}
+.is-success {
+  color: green;
+}
+</style>

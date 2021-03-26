@@ -8,7 +8,10 @@
         <p>
           🙋 {{ content.focalPoint }}<br />
           📆
-          {{ content.dateAvailable }}<br />
+          {{ content.dateAvailable }}
+        </p>
+        <br />
+        <p>
           {{ content.description }}
         </p>
       </div>
@@ -16,6 +19,9 @@
         <CardMetrics :content="content"></CardMetrics>
       </div>
       <div v-show="activeTab === 2" class="tab-results">
+        <div class="title">Board Review:</div>
+        <CardBoard /><br />
+        <div class="title">Summary:</div>
         <CardQuali
           v-if="content.type == 'Qualitative'"
           class="qualitative"
@@ -51,8 +57,9 @@
 import CardQuali from '~/components/card-quali'
 import CardQuanti from '~/components/card-quanti'
 import CardMetrics from '~/components/card-metrics'
+import CardBoard from '~/components/card-board'
 export default {
-  components: { CardQuali, CardQuanti, CardMetrics },
+  components: { CardQuali, CardQuanti, CardMetrics, CardBoard },
   props: {
     content: {
       required: true,
@@ -75,22 +82,23 @@ export default {
 <style scoped>
 .card {
   border: 2px var(--color-grey) solid;
-  border-radius: 1rem;
+  /* border-radius: 1rem; */
   background: #efefef;
   text-align: left;
   margin: 0.5rem;
   display: flex;
-  width: clamp(300px, 23%, 50%);
-  height: clamp(300px, 40%, 50%);
+  width: 300px;
+  height: 400px;
   flex-direction: column;
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.3);
 }
 .header {
   padding: 1rem;
   background: var(--color-orange);
-  border-radius: 0.9rem 0.9rem 0 0;
+  /* border-radius: 0.9rem 0.9rem 0 0; */
   flex: 0 0 50px;
   box-sizing: border-box;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.3);
 }
 .header h3 {
   margin-bottom: 0;
@@ -130,18 +138,22 @@ export default {
   border-top: none;
 }
 .tab:first-of-type {
-  border-bottom-left-radius: 1rem;
+  /* border-bottom-left-radius: 1rem; */
   border-left: none;
 }
 .tab:last-of-type {
-  border-bottom-right-radius: 1rem;
+  /* border-bottom-right-radius: 1rem; */
   border-right: none;
 }
 .tab-results {
   display: flex;
-  justify-content: space-around;
-  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: left;
   height: 100%;
   overflow: hidden;
+}
+.title {
+  text-decoration: underline;
 }
 </style>

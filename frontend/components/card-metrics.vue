@@ -1,22 +1,16 @@
 <template>
   <div>
-    <h5>Associated Items:</h5>
-    <h6 v-show="content.measuring_successes.length">Measuring Success</h6>
-    <div v-for="item1 in content.measuring_successes" :key="item1.value">
-      <span>- {{ item1.value }}</span>
-    </div>
-    <h6 v-show="content.performance_targets.length">Performance Targets</h6>
-    <div v-for="item1 in content.performance_targets" :key="item1.value">
-      <span>- {{ item1.value }} </span>
-    </div>
-    <h6 v-show="content.strategies_for_improvements.length">
-      Strategies for Improvement
-    </h6>
     <div
       v-for="item1 in content.strategies_for_improvements"
       :key="item1.value"
     >
-      <span>- {{ item1.value }} </span>
+      <span>✍️ {{ item1.value }} </span>
+      <div v-for="item1 in content.measuring_successes" :key="item1.value">
+        <span>📏 {{ item1.value }}</span>
+      </div>
+    </div>
+    <div v-for="item1 in content.performance_targets" :key="item1.value">
+      <span>🎯 {{ item1.value }} </span>
     </div>
     <span
       v-show="

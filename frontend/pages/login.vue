@@ -31,7 +31,8 @@
               </div>
             </div>
             <div class="control">
-              <button type="submit" class="button--grey space-top">
+              <Spinner v-if="loading" />
+              <button v-else type="submit" class="button--grey space-top">
                 Log In
               </button>
             </div>
@@ -61,6 +62,7 @@ export default {
   middleware: 'guest',
   data() {
     return {
+      loading: false,
       email: '',
       password: '',
       error: null,
@@ -69,6 +71,7 @@ export default {
   methods: {
     async login() {
       this.error = null
+      this.loading = true
       try {
         await this.$auth.loginWith('local', {
           data: {
@@ -76,8 +79,10 @@ export default {
             password: this.password,
           },
         })
+        this.loading = false
         this.$router.push('/')
       } catch (e) {
+        this.loading = false
         this.error = e.response.data.message[0].messages[0].message
       }
     },

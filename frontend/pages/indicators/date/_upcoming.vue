@@ -16,9 +16,7 @@
           <input v-model="dateEnd" type="date" name="dateEnd" />
         </div>
       </div>
-      <div v-if="!indicators">
-        Waiting on server. This may take up to 30 seconds.
-      </div>
+      <div v-if="!indicators"><Spinner /><br />Retrieving data...</div>
       <div class="arrange-cards">
         <Card
           v-for="(ind, i) in indicators"
@@ -36,8 +34,9 @@
 <script>
 import Card from '~/components/card'
 import upcomingQuery from '~/apollo/queries/indicators/indicatorsByDate'
+import Spinner from '~/components/spinner'
 export default {
-  components: { Card },
+  components: { Card, Spinner },
   props: {
     category: {
       required: false,
@@ -97,6 +96,7 @@ export default {
 <style scoped>
 .indicators {
   display: flex;
+  height: 100%;
   padding: 1rem;
   flex-direction: column;
   align-content: flex-start;

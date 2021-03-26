@@ -5,9 +5,9 @@ module.exports = ({ env }) => ({
       apiKey: env('SENDGRID_API_KEY'),
     },
     settings: {
-      defaultFrom: 'josephbcrosby@gmail.com',
-      defaultReplyTo: 'josephbcrosby@gmail.com',
-      testAddress: 'josephbcrosby+testemail@gmail.com',
+      defaultFrom: env('SENDGRID_FROM_EMAIL'),
+      defaultReplyTo: env('SENDGRID_REPLYTO_EMAIL'),
+      testAddress: env('SENDGRID_TEST_ADDRESS'),
     },
   },
   graphql: {
