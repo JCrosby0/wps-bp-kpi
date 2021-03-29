@@ -1,0 +1,15 @@
+query someQuery {
+  boardMeetings {
+    id
+    date
+    year
+    term
+    week
+    indicators {
+      name
+      boardDateLastNoted
+      boardStatusAchieved
+      boardStatusProgressNoted
+    }
+  }
+}

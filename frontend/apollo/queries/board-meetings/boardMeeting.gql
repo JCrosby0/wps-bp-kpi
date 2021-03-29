@@ -1,0 +1,15 @@
+query boardMeeting($meeting: String) {
+  boardMeeting: boardMeetings(where: { id: $meeting }) {
+    id
+    date
+    year
+    term
+    week
+    indicators {
+      name
+      boardDateLastNoted
+      boardStatusAchieved
+      boardStatusProgressNoted
+    }
+  }
+}

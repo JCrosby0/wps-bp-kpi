@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/board-meetings",
+      "handler": "board-meetings.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/board-meetings/count",
+      "handler": "board-meetings.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/board-meetings/:id",
+      "handler": "board-meetings.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/board-meetings",
+      "handler": "board-meetings.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/board-meetings/:id",
+      "handler": "board-meetings.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/board-meetings/:id",
+      "handler": "board-meetings.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

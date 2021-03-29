@@ -78,6 +78,21 @@
               class="button--orange"
               >{{ link.display }}</nuxt-link
             >
+            <div>
+              <div class="span-label">View Board Meetings:</div>
+              <nuxt-link
+                v-for="meeting in meetings"
+                :key="meeting.display"
+                :to="{
+                  name: 'board-meetings-meeting',
+                  params: {
+                    meeting: meeting.meeting,
+                  },
+                }"
+                class="button--orange"
+                >{{ meeting.display }}</nuxt-link
+              >
+            </div>
             <div v-if="showNYI" class="showNYI">
               <div class="span-label">View Progress Summary:</div>
               <nuxt-link
@@ -146,6 +161,16 @@ export default {
           display: 'Next Year',
           dateStart: this.getDateTime(),
           dateEnd: this.getDateTime(1),
+        },
+      ],
+      meetings: [
+        {
+          display: 'All',
+          meeting: 'all',
+        },
+        {
+          display: 'Last',
+          meeting: 'last',
         },
       ],
     }

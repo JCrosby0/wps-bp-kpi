@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "meetings",
+  "info": {
+    "name": "meetings",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "date": {
+      "type": "date"
+    },
+    "year": {
+      "type": "integer"
+    },
+    "term": {
+      "type": "integer"
+    },
+    "week": {
+      "type": "integer"
+    },
+    "indicators": {
+      "collection": "indicators",
+      "via": "board_meetings",
+      "dominant": true
+    },
+    "minutes": {
+      "type": "string"
+    }
+  }
+}
