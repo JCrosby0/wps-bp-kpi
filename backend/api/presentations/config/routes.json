@@ -2,48 +2,48 @@
   "routes": [
     {
       "method": "GET",
-      "path": "/board-meetings",
-      "handler": "board-meetings.find",
+      "path": "/presentations",
+      "handler": "presentations.find",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/board-meetings/count",
-      "handler": "board-meetings.count",
+      "path": "/presentations/count",
+      "handler": "presentations.count",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/board-meetings/:id",
-      "handler": "board-meetings.findOne",
+      "path": "/presentations/:id",
+      "handler": "presentations.findOne",
       "config": {
         "policies": []
       }
     },
     {
       "method": "POST",
-      "path": "/board-meetings",
-      "handler": "board-meetings.create",
+      "path": "/presentations",
+      "handler": "presentations.create",
       "config": {
         "policies": []
       }
     },
     {
       "method": "PUT",
-      "path": "/board-meetings/:id",
-      "handler": "board-meetings.update",
+      "path": "/presentations/:id",
+      "handler": "presentations.update",
       "config": {
         "policies": []
       }
     },
     {
       "method": "DELETE",
-      "path": "/board-meetings/:id",
-      "handler": "board-meetings.delete",
+      "path": "/presentations/:id",
+      "handler": "presentations.delete",
       "config": {
         "policies": []
       }

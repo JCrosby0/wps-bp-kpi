@@ -2,8 +2,7 @@
   "kind": "collectionType",
   "collectionName": "meetings",
   "info": {
-    "name": "meetings",
-    "description": ""
+    "name": "Meetings"
   },
   "options": {
     "increments": true,
@@ -23,13 +22,9 @@
     "week": {
       "type": "integer"
     },
-    "indicators": {
-      "collection": "indicators",
-      "via": "board_meetings",
-      "dominant": true
-    },
-    "minutes": {
-      "type": "string"
+    "presentations": {
+      "via": "meeting",
+      "collection": "presentations"
     }
   }
 }

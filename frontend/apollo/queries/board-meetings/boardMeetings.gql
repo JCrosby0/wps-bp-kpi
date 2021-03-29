@@ -1,15 +1,13 @@
 query someQuery {
-  boardMeetings {
+  meetings {
     id
     date
     year
     term
     week
-    indicators {
-      name
-      boardDateLastNoted
-      boardStatusAchieved
-      boardStatusProgressNoted
+    presentations {
+      presenter
+      indicator
     }
   }
 }

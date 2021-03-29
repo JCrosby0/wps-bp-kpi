@@ -1,0 +1,46 @@
+{
+  "kind": "collectionType",
+  "collectionName": "presentations",
+  "info": {
+    "name": "presentations"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "meeting": {
+      "model": "meetings",
+      "via": "presentations"
+    },
+    "indicator": {
+      "model": "indicators",
+      "via": "presentations"
+    },
+    "Presenter": {
+      "type": "string"
+    },
+    "progressStatus": {
+      "type": "enumeration",
+      "enum": [
+        "NotYetStarted",
+        "InProgress",
+        "Ongoing",
+        "Complete"
+      ]
+    },
+    "progressAchieved": {
+      "type": "enumeration",
+      "enum": [
+        "Exceed",
+        "Achieve",
+        "Fail",
+        "Unknown"
+      ]
+    },
+    "Comments": {
+      "type": "text"
+    }
+  }
+}

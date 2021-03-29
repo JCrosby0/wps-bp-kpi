@@ -67,9 +67,9 @@
     "boardStatusProgressNoted": {
       "type": "boolean"
     },
-    "board_meetings": {
-      "via": "indicators",
-      "collection": "board-meetings"
+    "presentations": {
+      "via": "indicator",
+      "collection": "presentations"
     }
   }
 }

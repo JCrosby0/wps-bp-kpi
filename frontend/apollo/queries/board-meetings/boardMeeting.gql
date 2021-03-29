@@ -1,5 +1,5 @@
 query boardMeeting($meeting: String) {
-  boardMeeting: boardMeetings(where: { id: $meeting }) {
+  meeting: meetings(where: { id: $meeting }) {
     id
     date
     year
