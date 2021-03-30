@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="container">
     <div class="indicators">
-      <h1>{{ focusArea }} Indicators</h1>
+      <h1 class="heading">{{ focusArea }} Indicators</h1>
       <div v-if="$apolloData.loading"><Spinner /><br />Retrieving data...</div>
       <div class="arrange-cards">
         <Card

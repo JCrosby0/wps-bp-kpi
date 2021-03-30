@@ -113,4 +113,23 @@ html {
   transform: translatey(-100vh);
   /* opacity: 0; */
 }
+
+.heading {
+  font-family: Staatliches;
+}
+
+.container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: left;
+  overflow: auto;
+  padding: 1rem;
+  margin: 0 auto;
+}
+a {
+  text-decoration: none;
+}
 </style>

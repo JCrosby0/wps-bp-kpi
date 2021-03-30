@@ -1,5 +1,5 @@
 <template>
-  <div class="business-plan-container">
+  <div class="container">
     <h1 class="heading">
       {{ section }}
     </h1>
@@ -166,23 +166,4 @@ export default {
 }
 </script>
 
-<style scoped>
-.buttons {
-  display: flex;
-  flex-flow: row wrap;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-}
-.business-plan-container {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-  overflow: auto;
-  padding: 1rem;
-}
-.active {
-  background: #35495e;
-  color: white;
-}
-</style>
+<style scoped></style>

@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h1>Board Meetings</h1>
+  <div class="container">
+    <h1 class="heading">Board Meetings</h1>
     <div v-if="$apollo.loading"><Spinner /><br />Retrieving data...</div>
     <div v-else class="results">
       {{ $route.params.meeting }}
@@ -17,10 +17,12 @@ export default {
   name: 'BoardMeetings',
   components: { Spinner },
   apollo: {
-    boardMeetings: {
+    meetings: {
       prefetch: true,
       query: boardMeetingsQuery,
-      result() {},
+      result({ data }) {
+        console.log(data)
+      },
     },
     // boardMeeting: {
     //   prefetch: false,
@@ -36,4 +38,12 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped>
+.container {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  overflow: auto;
+  padding: 1rem;
+}
+</style>
