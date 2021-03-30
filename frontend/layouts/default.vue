@@ -38,6 +38,12 @@ html {
   text-align: center;
 }
 
+.center {
+  text-align: center;
+}
+.left {
+  text-align: left;
+}
 .default-screen {
   height: 100vh;
   display: flex;
@@ -77,8 +83,8 @@ html {
   border: 1px solid var(--color-grey);
   color: var(--color-grey);
   text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
+  padding: 0.5rem 2rem;
+  /* margin-left: 15px; */
 }
 
 .button--grey:hover {

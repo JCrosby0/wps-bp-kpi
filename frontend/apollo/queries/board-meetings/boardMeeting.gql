@@ -5,11 +5,14 @@ query boardMeeting($meeting: String) {
     year
     term
     week
-    indicators {
-      name
-      boardDateLastNoted
-      boardStatusAchieved
-      boardStatusProgressNoted
+    presentations {
+      Presenter
+      Comments
+      progressStatus
+      progressAchieved
+      indicator {
+        name
+      }
     }
   }
 }
