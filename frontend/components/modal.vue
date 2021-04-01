@@ -8,31 +8,22 @@
         <slot></slot>
       </div>
       <div class="footer">
-        <slot name="actions"></slot>
-        <button
-          title="OK"
-          class="buttons positive"
-          @click="$emit('ok', payload)"
-        >
-          OK
-        </button>
-        <button title="Cancel" class="buttons negative" @click="$emit('close')">
-          Cancel
-        </button>
+        <slot name="actions">
+          <button title="OK" class="buttons positive" @click="$emit('ok')">
+            OK
+          </button>
+          <button
+            title="Cancel"
+            class="buttons negative"
+            @click="$emit('close')"
+          >
+            Cancel
+          </button>
+        </slot>
       </div>
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  data() {
-    return {
-      payload: {},
-    }
-  },
-}
-</script>
 
 <style scoped>
 .modal {
@@ -55,10 +46,10 @@ export default {
   flex-direction: column;
 }
 .title {
-  flex: 0 0 4rem;
+  flex: 0 0 2.5rem;
   background: var(--color-light-orange);
   width: 100%;
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: bold;
   padding: 0.5rem 2rem;
 }
@@ -68,14 +59,14 @@ export default {
   overflow-y: auto;
 }
 .footer {
-  flex: 0 0 4rem;
+  flex: 0 0 3.5rem;
   background: #ccc;
   text-align: right;
 }
 .buttons {
   margin: 0.5rem;
   margin-left: 0;
-  height: 3rem;
+  height: 2.5rem;
   width: 5rem;
   border-radius: 0.5rem;
   padding: 1rem, 2rem;

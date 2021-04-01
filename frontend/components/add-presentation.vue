@@ -6,17 +6,14 @@
         Term {{ data.term }} Week {{ data.week }}, {{ data.year }}
       </div>
     </div>
-    <div v-if="!data.presentations.length" class="none">
-      There are no presentations for this meeting.
-    </div>
-    <div v-for="(pres, i) in data.presentations" :key="'presentation-' + i">
+    <form id="formAddPresentation" ref="theForm">
       <div class="row">
-        <div class="label">Presenter:</div>
-        <input v-model="pres.Presenter" class="value" />
+        <label for="presenter" class="label">Presenter:</label>
+        <input v-model="form.Presenter" name="presenter" class="value" />
       </div>
       <div class="row">
-        <div class="label">Comments:</div>
-        <input v-model="pres.Comments" class="value" />
+        <label for="comments" class="label">Comments:</label>
+        <textarea v-model="form.Comments" name="comments" class="value" />
       </div>
       <!-- <div
         v-for="(ind, j) in pres.indicator"
@@ -24,14 +21,23 @@
         class="indicators"
       > -->
       <div class="row">
-        <div class="label">Indicator:</div>
-        <input v-model="pres.indicator.name" class="value" />
+        <label for="indicatorName" class="label">Indicator:</label>
+        <select
+          v-if="!$apolloData.loading"
+          v-model="form.indicator.name"
+          name="indicatorName"
+          class="value"
+        >
+          <option v-for="ind in indicators" :key="ind.id" :value="ind.id">
+            {{ ind.name }}
+          </option>
+        </select>
       </div>
       <div class="row">
-        <div class="label">Progress:</div>
+        <label for="progress" class="label">Progress:</label>
         <select
           id="progress"
-          v-model="pres.progressAchieved"
+          v-model="form.progressAchieved"
           name="progress"
           class="value"
         >
@@ -42,36 +48,26 @@
         </select>
       </div>
       <div class="row">
-        <div class="label">Achieved:</div>
+        <label for="status" class="label">Quality:</label>
         <!-- <input v-model="pres.progressStatus" class="value" /> -->
         <select
           id="progress"
-          v-model="pres.progressStatus"
-          name="progress"
+          v-model="form.progressStatus"
+          name="status"
           class="value"
         >
+          <option value="Unknown">Unknown</option>
           <option value="Exceed">Exceed</option>
           <option value="Achieve">Achieve</option>
           <option value="Fail">Fail</option>
-          <option value="Unknown">Unknown</option>
         </select>
       </div>
-      <!-- </div> -->
-      <hr width="80%" class="center" />
-    </div>
-    <div class="right">
-      <button
-        title="Add Presentation"
-        class="add-presentation"
-        @click="$emit('addPresentation')"
-      >
-        +
-      </button>
-    </div>
+    </form>
   </div>
 </template>
 
 <script>
+import indicatorsName from '~/apollo/queries/indicators/indicatorsName'
 export default {
   props: {
     data: {
@@ -94,6 +90,39 @@ export default {
       },
     },
   },
+  data() {
+    return {
+      form: {
+        Presenter: null,
+        Comments: null,
+        indicator: { name: null },
+        progressStatus: null,
+        progressAchieved: null,
+      },
+    }
+  },
+  computed: {
+    theForm() {
+      return document.getElementById('formAddpresentation')
+    },
+  },
+  methods: {
+    sortByKey(a, b, key) {
+      return a[key] < b[key] ? -1 : a[key] > b[key] ? 1 : 0
+    },
+  },
+  apollo: {
+    indicators: {
+      prefetch: true,
+      query: indicatorsName,
+      result({ data }) {
+        data.indicators = data.indicators.sort((a, b) =>
+          this.sortByKey(a, b, 'name')
+        )
+        return data
+      },
+    },
+  },
 }
 </script>
 
@@ -111,6 +140,9 @@ export default {
   font-size: 1rem;
   padding: 0.5rem 1rem;
   margin-bottom: 0.5rem;
+}
+textarea {
+  height: 150px;
 }
 select#progress {
   width: 100%;

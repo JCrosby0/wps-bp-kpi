@@ -168,10 +168,10 @@ export default {
           display: 'All',
           meeting: 'all',
         },
-        {
-          display: 'Last',
-          meeting: 'last',
-        },
+        // {
+        //   display: 'Last',
+        //   meeting: 'last',
+        // },
       ],
     }
   },

@@ -1,0 +1,81 @@
+{
+  "meetings": [
+    {
+      "display": "Date",
+      "key": "date",
+      "width": "100px",
+      "align": "left"
+    },
+    {
+      "display": "Presentations",
+      "key": "presentations",
+      "width": "fill",
+      "align": "center"
+    }
+  ],
+  "meetings_bu": [
+    {
+      "display": "Date",
+      "key": "date",
+      "width": "100px",
+      "align": "left"
+    },
+    {
+      "display": "Term",
+      "key": "term",
+      "width": false,
+      "align": "center"
+    },
+    {
+      "display": "Week",
+      "key": "week",
+      "width": false,
+      "align": "center"
+    },
+    {
+      "display": "Year",
+      "key": "year",
+      "width": false,
+      "align": "center"
+    },
+    {
+      "display": "Presentations",
+      "key": "presentations",
+      "width": "fill",
+      "align": "center"
+    }
+  ],
+
+  "presentations": [
+    {
+      "display": "Presenter",
+      "key": "Presenter",
+      "width": "200px",
+      "align": "left"
+    },
+    {
+      "display": "Comments",
+      "key": "Comments",
+      "width": "",
+      "align": "left"
+    },
+    {
+      "display": "Indicator",
+      "key": "indicator",
+      "width": "",
+      "align": "left"
+    },
+    {
+      "display": "Progress Status",
+      "key": "progressStatus",
+      "width": "",
+      "align": "left"
+    },
+    {
+      "display": "Completion Status",
+      "key": "progressAchieved",
+      "width": "",
+      "align": "left"
+    }
+  ]
+}

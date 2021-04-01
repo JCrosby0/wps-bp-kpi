@@ -13,52 +13,33 @@
         <th class="center">Actions</th>
       </tr>
     </thead>
-    <tbody></tbody>
-    <tr v-for="(row, r) in data" :key="row.date">
-      <td v-for="(col, c) in headers" :key="`r${r}c${c}`" :class="col.align">
-        {{ row[col.key] }}
-      </td>
-      <td class="center">
-        <button class="button--grey" @click="$emit('meeting', row)">
-          View Meeting
-        </button>
-      </td>
-    </tr>
+    <tbody v-for="(row, r) in data" :key="row.date">
+      <tr
+        :class="{
+          clickable: headerKey === 'meetings',
+          expanded: meetingId && meetingId == row.id,
+        }"
+        @click="$emit('rowSelect', row)"
+      >
+        <td v-for="(col, c) in headers" :key="`r${r}c${c}`" :class="col.align">
+          {{ row[col.key] }}
+        </td>
+        <td class="center">
+          <slot name="actions" :row="row"></slot>
+        </td>
+      </tr>
+      <!-- this logic is for which row to expand.
+      TODO: Could make it generic? -->
+      <tr v-if="meetingId && meetingId == row.id">
+        <td colspan="999" class="full">
+          <slot name="details" :row="row"> Details go here... </slot>
+        </td>
+      </tr>
+    </tbody>
   </table>
 </template>
 <script>
-const tableHeadings = [
-  {
-    display: 'Date',
-    key: 'date',
-    width: '100px',
-    align: 'left',
-  },
-  {
-    display: 'Term',
-    key: 'term',
-    width: false,
-    align: 'center',
-  },
-  {
-    display: 'Week',
-    key: 'week',
-    width: false,
-    align: 'center',
-  },
-  {
-    display: 'Year',
-    key: 'year',
-    width: false,
-    align: 'center',
-  },
-  {
-    display: 'Presentations',
-    key: 'presentations',
-    width: 'fill',
-    align: 'center',
-  },
-]
+import tableSpecs from '~/assets/tableSpecs.json'
 export default {
   props: {
     data: {
@@ -66,11 +47,51 @@ export default {
       type: Array,
       default: () => [],
     },
-    headers: {
+    headerKey: {
+      required: true,
+      type: String,
+    },
+    meetingId: {
       required: false,
-      type: Array,
-      default: () => tableHeadings,
+      type: String || null,
+      default: () => null,
+    },
+    meeting: {
+      required: false,
+      type: Object || null,
+      default: () => null,
+    },
+  },
+  computed: {
+    headers() {
+      return tableSpecs[this.headerKey]
     },
   },
 }
 </script>
+<style scoped>
+table {
+  width: 100%;
+  border-spacing: 0;
+  /* border-collapse: collapse; */
+}
+
+td,
+th {
+  padding: 0.25rem 0.5rem;
+}
+td.full {
+  padding: 0;
+}
+.expanded {
+  background: var(--color-orange);
+  border: 1px grey solid;
+}
+.clickable {
+  cursor: pointer;
+}
+.clickable:hover {
+  background: var(--color-light-orange);
+  border: 1px grey solid;
+}
+</style>

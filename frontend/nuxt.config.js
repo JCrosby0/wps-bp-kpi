@@ -22,7 +22,7 @@ export default {
       { hid: 'description', name: 'description', content: '' },
     ],
     link: [
-      { rel: 'icon', type: 'image/png', href: '/favicon.png' },
+      { rel: 'icon', type: 'image/png', href: '/favicon_crosbysolutions.png' },
       {
         rel: 'stylesheet',
         href: 'https://fonts.googleapis.com/css?family=Staatliches',
@@ -30,6 +30,10 @@ export default {
       {
         rel: 'stylesheet',
         href: 'https://fonts.googleapis.com/css?family=Lato',
+      },
+      {
+        rel: 'stylesheet',
+        href: 'https://fonts.googleapis.com/css?family=Montserrat',
       },
     ],
   },

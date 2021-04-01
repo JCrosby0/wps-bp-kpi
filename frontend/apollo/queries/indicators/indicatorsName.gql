@@ -1,0 +1,6 @@
+query Indicators {
+  indicators {
+    name
+    id
+  }
+}
