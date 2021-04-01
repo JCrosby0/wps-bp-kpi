@@ -36,15 +36,17 @@
       </div>
     </div>
     <div class="footer">
-      <p class="center">Created by Crosby Solutions, 2021</p>
+      <Logo type="single" class="logo" />
     </div>
   </div>
 </template>
 <script>
 import Dashboard from '~/components/Dashboard'
+import Logo from '~/components/crosby-solutions'
 export default {
   components: {
     Dashboard,
+    Logo,
   },
 }
 </script>
@@ -56,6 +58,14 @@ export default {
 .footer {
   flex: 0 0 1rem;
   font-size: 0.8rem;
+  text-align: right;
+}
+.logo {
+  font-size: 16px;
+  width: 8em;
+  height: 1em;
+  margin: 0;
+  margin-left: calc(100% - 8em);
 }
 .description {
   background: black;

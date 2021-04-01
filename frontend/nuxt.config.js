@@ -22,7 +22,7 @@ export default {
       { hid: 'description', name: 'description', content: '' },
     ],
     link: [
-      { rel: 'icon', type: 'image/png', href: '/favicon_crosbysolutions.png' },
+      { rel: 'icon', type: 'image/png', href: '/favicon.png' },
       {
         rel: 'stylesheet',
         href: 'https://fonts.googleapis.com/css?family=Staatliches',
