@@ -75,11 +75,14 @@ export default {
       buttons: [
         new Button('Submit', 'Submit Form', this.handleSubmit, 'positive'),
         new Button('Reset', 'Reset Form', this.handleReset),
-        new Button('Cancel', 'Close Window', (this.showMeeting = false)),
+        new Button('Cancel', 'Close Window', this.closeWindow),
       ],
     }
   },
   methods: {
+    closeWindow() {
+      this.showMeeting = false
+    },
     displayMeeting(meeting) {
       // meeting.id
       this.meetingId = meeting.id
