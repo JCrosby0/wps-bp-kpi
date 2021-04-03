@@ -2,7 +2,8 @@
   "kind": "collectionType",
   "collectionName": "presentations",
   "info": {
-    "name": "presentations"
+    "name": "presentations",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -18,28 +19,28 @@
       "model": "indicators",
       "via": "presentations"
     },
-    "Presenter": {
+    "presenter": {
       "type": "string"
     },
     "progressStatus": {
       "type": "enumeration",
       "enum": [
-        "NotYetStarted",
-        "InProgress",
-        "Ongoing",
-        "Complete"
+        "NOTYETSTARTED",
+        "INPROGRESS",
+        "ONGOING",
+        "COMPLETE"
       ]
     },
     "progressAchieved": {
       "type": "enumeration",
       "enum": [
-        "Exceed",
-        "Achieve",
-        "Fail",
-        "Unknown"
+        "EXCEED",
+        "ACHIEVE",
+        "FAIL",
+        "UNKNOWN"
       ]
     },
-    "Comments": {
+    "comments": {
       "type": "text"
     }
   }
