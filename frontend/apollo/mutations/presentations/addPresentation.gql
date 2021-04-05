@@ -1,0 +1,34 @@
+mutation CreatePresentation(
+  $meeting: ID
+  $indicator: ID
+  $presenter: String
+  $comments: String
+  $completeness: ENUM_PRESENTATIONS_COMPLETENESS
+  $grade: ENUM_PRESENTATIONS_GRADE
+  $test: ENUM_PRESENTATIONS_TEST
+) {
+  createPresentation(
+    input: {
+      data: {
+        meeting: $meeting
+        indicator: $indicator
+        presenter: $presenter
+        comments: $comments
+        completeness: $completeness
+        grade: $grade
+      }
+    }
+  ) {
+    presentation {
+      id
+      presenter
+      comments
+      indicator {
+        id
+        name
+      }
+      progressStatus
+      progressAchieved
+    }
+  }
+}

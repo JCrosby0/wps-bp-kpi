@@ -9,11 +9,11 @@
     <form id="formAddPresentation" ref="theForm">
       <div class="row">
         <label for="presenter" class="label">Presenter:</label>
-        <input v-model="form.Presenter" name="presenter" class="value" />
+        <input v-model="form.presenter" name="presenter" class="value" />
       </div>
       <div class="row">
         <label for="comments" class="label">Comments:</label>
-        <textarea v-model="form.Comments" name="comments" class="value" />
+        <textarea v-model="form.comments" name="comments" class="value" />
       </div>
       <!-- <div
         v-for="(ind, j) in pres.indicator"
@@ -24,7 +24,7 @@
         <label for="indicatorName" class="label">Indicator:</label>
         <select
           v-if="!$apolloData.loading"
-          v-model="form.indicator.name"
+          v-model="form.indicator.id"
           name="indicatorName"
           class="value"
         >
@@ -32,6 +32,13 @@
             {{ ind.name }}
           </option>
         </select>
+        <!-- placeholder input box so that it doesn't appear from nowhere when indicators are available -->
+        <select
+          v-else
+          v-model="form.indicator.name"
+          name="indicatorName"
+          class="value"
+        ></select>
       </div>
       <div class="row">
         <label for="progress" class="label">Progress:</label>
@@ -41,10 +48,10 @@
           name="progress"
           class="value"
         >
-          <option value="NotYetStarted">Not Yet Started</option>
-          <option value="InProgress">In Progress</option>
-          <option value="Ongong">Ongoing</option>
-          <option value="Complete">Complete</option>
+          <option value="NOTYETSTARTED">Not Yet Started</option>
+          <option value="INPROGRESS">In Progress</option>
+          <option value="ONGOING">On going</option>
+          <option value="COMPLETE">Complete</option>
         </select>
       </div>
       <div class="row">
@@ -56,10 +63,10 @@
           name="status"
           class="value"
         >
-          <option value="Unknown">Unknown</option>
-          <option value="Exceed">Exceed</option>
-          <option value="Achieve">Achieve</option>
-          <option value="Fail">Fail</option>
+          <option value="UNKNOWN">Unknown</option>
+          <option value="EXCEED">Exceed</option>
+          <option value="ACHIEVE">Achieve</option>
+          <option value="FAIL">Fail</option>
         </select>
       </div>
     </form>
@@ -81,8 +88,8 @@ export default {
           week: 14,
           presentations: [
             {
-              Presenter: 'Test',
-              Comments: 'Some comments about the meeting',
+              presenter: 'Test',
+              comments: 'Some comments about the meeting',
               indicator: ['name1', 'name2'],
             },
           ],
@@ -93,9 +100,9 @@ export default {
   data() {
     return {
       form: {
-        Presenter: null,
-        Comments: null,
-        indicator: { name: null },
+        presenter: null,
+        comments: null,
+        indicator: { id: null },
         progressStatus: null,
         progressAchieved: null,
       },

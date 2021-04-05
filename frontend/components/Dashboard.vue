@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard">
-    <p v-if="$apolloData.loading"><Spinner /><br />Retrieving data...</p>
+    <p v-if="$apolloData.loading"><Loading /></p>
     <div v-if="!$apolloData.loading">
       <p>
         There are currently
@@ -46,10 +46,10 @@ import targetsWithIndicators from '~/apollo/queries/dashboard/targetsWithIndicat
 import boardNoted from '~/apollo/queries/dashboard/indicatorsNotedByBoard.gql'
 import boardComplete from '~/apollo/queries/dashboard/boardComplete.gql'
 import boardProgress from '~/apollo/queries/dashboard/boardProgress.gql'
-import Spinner from '~/components/spinner'
+import Loading from '~/components/loading'
 export default {
   components: {
-    Spinner,
+    Loading,
   },
   apollo: {
     indicators: {

@@ -6,8 +6,8 @@ query meetings {
     term
     week
     presentations {
-      Presenter
-      Comments
+      presenter
+      comments
       indicator {
         name
       }

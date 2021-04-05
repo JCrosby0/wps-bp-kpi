@@ -22,26 +22,28 @@
     "presenter": {
       "type": "string"
     },
-    "progressStatus": {
+    "comments": {
+      "type": "text"
+    },
+    "completeness": {
       "type": "enumeration",
       "enum": [
-        "NOTYETSTARTED",
-        "INPROGRESS",
+        "COMPLETE",
         "ONGOING",
-        "COMPLETE"
+        "INPROGRESS",
+        "NOTSTARTED",
+        "UNKNOWN"
       ]
     },
-    "progressAchieved": {
+    "grade": {
       "type": "enumeration",
       "enum": [
         "EXCEED",
         "ACHIEVE",
+        "PARTIAL",
         "FAIL",
         "UNKNOWN"
       ]
-    },
-    "comments": {
-      "type": "text"
     }
   }
 }

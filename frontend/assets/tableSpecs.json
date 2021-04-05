@@ -49,13 +49,13 @@
   "presentations": [
     {
       "display": "Presenter",
-      "key": "Presenter",
+      "key": "presenter",
       "width": "200px",
       "align": "left"
     },
     {
       "display": "Comments",
-      "key": "Comments",
+      "key": "comments",
       "width": "",
       "align": "left"
     },

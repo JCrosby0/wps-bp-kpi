@@ -46,6 +46,7 @@
 </template>
 
 <script>
+// import gql from 'graphql-tag'
 import Spinner from '~/components/spinner'
 import Table from '~/components/table-meetings'
 import Modal from '~/components/modal'
@@ -53,7 +54,7 @@ import Details from '~/components/table-meeting-row-details'
 import AddPresentation from '~/components/add-presentation'
 import boardMeetingsQuery from '~/apollo/queries/board-meetings/boardMeetings'
 import boardMeetingQuery from '~/apollo/queries/board-meetings/boardMeeting'
-
+import addPresentation from '~/apollo/mutations/presentations/addPresentation'
 class Button {
   constructor(display, title, click, addClass = 'negative') {
     this.classes = 'buttons ' + addClass
@@ -87,9 +88,65 @@ export default {
       // meeting.id
       this.meetingId = meeting.id
     },
-    handleSubmit(payload) {
+    handleSubmit(event, form = this.$refs.addPresentation.form) {
+      console.log('this.meeting[0].id: ', this.meeting[0].id)
+      console.log('form', form)
       this.showMeeting = false
-      // console.log(this.$refs.addPresentation.form)
+      this.$apollo
+        .mutate({
+          mutation: addPresentation,
+          // mutation: gql`
+          //   mutation CreatePresentation(
+          //     $meeting: ID
+          //     $indicator: ID
+          //     $presenter: String
+          //     $comments: String
+          //     $status: ENUM_PRESENTATIONS_PROGRESSSTATUS = ${form.progressStatus}
+          //     $achieved: ENUM_PRESENTATIONS_PROGRESSACHIEVED = ${form.progressAchieved}
+          //   ) {
+          //     createPresentation(
+          //       input: {
+          //         data: {
+          //           meeting: $meeting
+          //           indicator: $indicator
+          //           presenter: $presenter
+          //           comments: $comments
+          //         }
+          //       }
+          //     ) {
+          //       presentation {
+          //         id
+          //         presenter
+          //         comments
+          //         indicator {
+          //           id
+          //           name
+          //         }
+          //         progressStatus
+          //         progressAchieved
+          //       }
+          //     }
+          //   }
+          // `,
+          variables: {
+            meeting: this.meeting[0].id,
+            indicator: form.indicator.id,
+            presenter: form.presenter,
+            comments: form.comments,
+            status: form.progressStatus, // "NOTYETACHIEVED"
+            achieved: form.progressAchieved, // "UNKNOWN"
+            test: 'PASS',
+          },
+          // update(cache, { data: { createPresentation } }) {
+          //   console.log('cache: ', cache)
+          // },
+        })
+        .then((res) => {
+          console.log('res: ', res)
+        })
+        .catch((err) => {
+          console.error('err: ', err)
+        })
     },
     handleReset() {
       this.$refs.addPresentation.form = {
