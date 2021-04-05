@@ -22,17 +22,19 @@
         @click="$emit('rowSelect', row)"
       >
         <td v-for="(col, c) in headers" :key="`r${r}c${c}`" :class="col.align">
-          {{ row[col.key] }}
+          {{ col.key === 'indicator' ? row.indicator.name : row[col.key] }}
         </td>
         <td class="center">
-          <slot name="actions" :row="row"></slot>
+          <slot name="actions" :index="r" :row="row"></slot>
         </td>
       </tr>
       <!-- this logic is for which row to expand.
       TODO: Could make it generic? -->
       <tr v-if="meetingId && meetingId == row.id">
         <td colspan="999" class="full">
-          <slot name="details" :row="row"> Details go here... </slot>
+          <slot ref="detailsSlot" name="details" :row="row">
+            Details go here...
+          </slot>
         </td>
       </tr>
     </tbody>

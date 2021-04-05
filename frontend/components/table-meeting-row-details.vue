@@ -12,9 +12,19 @@
         :data="data.presentations"
         header-key="presentations"
       >
-        <template #actions>
-          <button>TODO: Update</button>
-          <button>TODO: Delete</button>
+        <template #actions="slotProps">
+          <button
+            class="button--grey"
+            @click="$emit('update', slotProps.index)"
+          >
+            Update
+          </button>
+          <button
+            class="button--grey"
+            @click="$emit('delete', slotProps.index)"
+          >
+            Delete
+          </button>
         </template>
       </Table>
     </div>

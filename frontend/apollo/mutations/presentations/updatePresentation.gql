@@ -1,4 +1,5 @@
-mutation CreatePresentation(
+mutation UpdatePresentation(
+  $presId: ID!
   $meeting: ID
   $indicator: ID
   $presenter: String
@@ -6,8 +7,9 @@ mutation CreatePresentation(
   $completeness: ENUM_PRESENTATIONS_COMPLETENESS
   $grade: ENUM_PRESENTATIONS_GRADE
 ) {
-  createPresentation(
+  updatePresentation(
     input: {
+      where: { id: $presId }
       data: {
         meeting: $meeting
         indicator: $indicator

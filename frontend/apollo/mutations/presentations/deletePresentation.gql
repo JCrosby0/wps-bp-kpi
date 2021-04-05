@@ -1,0 +1,7 @@
+mutation DeletePresentation($pres: ID!) {
+  deletePresentation(input: { where: { id: $pres } }) {
+    presentation {
+      id
+    }
+  }
+}

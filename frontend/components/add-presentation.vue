@@ -24,52 +24,49 @@
         <label for="indicatorName" class="label">Indicator:</label>
         <select
           v-if="!$apolloData.loading"
-          v-model="form.indicator.id"
+          v-model="form.indicator"
           name="indicatorName"
           class="value"
         >
-          <option v-for="ind in indicators" :key="ind.id" :value="ind.id">
+          <option v-for="ind in indicators" :key="ind.id" :value="ind">
             {{ ind.name }}
           </option>
         </select>
         <!-- placeholder input box so that it doesn't appear from nowhere when indicators are available -->
         <select
           v-else
-          v-model="form.indicator.name"
+          :value="form.indicator"
           name="indicatorName"
           class="value"
         ></select>
       </div>
       <div class="row">
-        <label for="progress" class="label">Progress:</label>
+        <label for="completeness" class="label">Completeness:</label>
         <select
-          id="progress"
-          v-model="form.progressAchieved"
+          id="completeness"
+          v-model="form.completeness"
           name="progress"
           class="value"
         >
-          <option value="NOTYETSTARTED">Not Yet Started</option>
+          <option value="UNKNOWN">Unknown</option>
+          <option value="NOTSTARTED">Not Yet Started</option>
           <option value="INPROGRESS">In Progress</option>
           <option value="ONGOING">On going</option>
           <option value="COMPLETE">Complete</option>
         </select>
       </div>
       <div class="row">
-        <label for="status" class="label">Quality:</label>
-        <!-- <input v-model="pres.progressStatus" class="value" /> -->
-        <select
-          id="progress"
-          v-model="form.progressStatus"
-          name="status"
-          class="value"
-        >
+        <label for="grade" class="label">Grade:</label>
+        <select id="grade" v-model="form.grade" name="grade" class="value">
           <option value="UNKNOWN">Unknown</option>
           <option value="EXCEED">Exceed</option>
           <option value="ACHIEVE">Achieve</option>
+          <option value="PARTIAL">Partial</option>
           <option value="FAIL">Fail</option>
         </select>
       </div>
     </form>
+    <div class="message">{{ message }}</div>
   </div>
 </template>
 
@@ -77,6 +74,13 @@
 import indicatorsName from '~/apollo/queries/indicators/indicatorsName'
 export default {
   props: {
+    presentationIndex: {
+      required: false,
+      type: Number || null,
+      default: () => {
+        return null
+      },
+    },
     data: {
       required: true,
       type: Object,
@@ -99,12 +103,13 @@ export default {
   },
   data() {
     return {
+      message: '',
       form: {
         presenter: null,
         comments: null,
-        indicator: { id: null },
-        progressStatus: null,
-        progressAchieved: null,
+        indicator: null,
+        completeness: null,
+        grade: null,
       },
     }
   },
@@ -112,6 +117,17 @@ export default {
     theForm() {
       return document.getElementById('formAddpresentation')
     },
+  },
+  mounted() {
+    if (this.presentationIndex === null) return
+    const pres = this.data.presentations[this.presentationIndex]
+    Object.keys(pres).forEach((key) => {
+      if (key === 'indicator') {
+        this.form.indicator = pres.indicator
+      } else {
+        this.form[key] = pres[key]
+      }
+    })
   },
   methods: {
     sortByKey(a, b, key) {
@@ -139,7 +155,7 @@ export default {
   flex-direction: row;
 }
 .label {
-  flex: 0 0 6rem;
+  flex: 0 0 7rem;
   padding: 0.5rem 0;
 }
 .value {
@@ -175,5 +191,9 @@ option {
   width: 3rem;
   height: 3rem;
   margin-left: auto;
+}
+.message {
+  color: red;
+  padding-left: 7rem;
 }
 </style>

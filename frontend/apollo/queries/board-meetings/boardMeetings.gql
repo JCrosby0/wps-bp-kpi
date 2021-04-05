@@ -9,6 +9,7 @@ query meetings {
       presenter
       comments
       indicator {
+        id
         name
       }
     }

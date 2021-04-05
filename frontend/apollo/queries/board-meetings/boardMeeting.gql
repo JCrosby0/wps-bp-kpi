@@ -6,12 +6,14 @@ query boardMeeting($meeting: String) {
     term
     week
     presentations {
+      id
       presenter
       comments
-      progressStatus
-      progressAchieved
+      completeness
+      grade
       indicator {
         name
+        id
       }
     }
   }

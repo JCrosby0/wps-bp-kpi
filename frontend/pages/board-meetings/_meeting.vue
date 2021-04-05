@@ -14,19 +14,33 @@
         @rowSelect="handleRowClick"
         @presentation="addPresentation"
       >
-        <template #details> <Details :data="meeting[0]" /></template>
+        <template #details>
+          <Details
+            ref="rowDetails"
+            :data="meeting[0]"
+            @update="(index) => handleActions('update', index)"
+            @delete="(index) => handleActions('delete', index)"
+        /></template>
         <template #actions="slotCtxt">
-          <button class="button--grey" @click="addPresentation(slotCtxt.row)">
+          <button
+            v-if="slotCtxt.row.id == meetingId"
+            class="button--grey"
+            @click="addPresentation(slotCtxt.row)"
+          >
             Add Presentation
+          </button>
+          <button v-else class="button--grey" @click="handleRowClick">
+            Select Row
           </button>
         </template>
       </Table>
-      <Modal v-if="showMeeting" @close="showMeeting = false">
-        <template #title>Add Presentation</template>
+      <Modal v-if="showModal" @close="showModal = false">
+        <template #title>{{ modalTitle }}</template>
         <template #default class="meeting">
           <AddPresentation
             ref="addPresentation"
             :data="$apolloData.data.meeting[0]"
+            :presentation-index="presentationIndex"
           />
         </template>
         <template #actions>
@@ -55,6 +69,8 @@ import AddPresentation from '~/components/add-presentation'
 import boardMeetingsQuery from '~/apollo/queries/board-meetings/boardMeetings'
 import boardMeetingQuery from '~/apollo/queries/board-meetings/boardMeeting'
 import addPresentation from '~/apollo/mutations/presentations/addPresentation'
+import updatePresentation from '~/apollo/mutations/presentations/updatePresentation'
+import deletePresentation from '~/apollo/mutations/presentations/deletePresentation'
 class Button {
   constructor(display, title, click, addClass = 'negative') {
     this.classes = 'buttons ' + addClass
@@ -69,10 +85,13 @@ export default {
   components: { Spinner, Table, Modal, AddPresentation, Details },
   data() {
     return {
-      showMeeting: false,
+      showModal: false,
+      modalTitle: 'Presentation',
       meetings: [],
       meeting: {},
       meetingId: null,
+      presentationId: null,
+      presentationIndex: null,
       buttons: [
         new Button('Submit', 'Submit Form', this.handleSubmit, 'positive'),
         new Button('Reset', 'Reset Form', this.handleReset),
@@ -82,60 +101,91 @@ export default {
   },
   methods: {
     closeWindow() {
-      this.showMeeting = false
+      this.showModal = false
     },
     displayMeeting(meeting) {
       // meeting.id
       this.meetingId = meeting.id
     },
     handleSubmit(event, form = this.$refs.addPresentation.form) {
-      console.log('this.meeting[0].id: ', this.meeting[0].id)
-      console.log('form', form)
-      this.showMeeting = false
+      if (this.presentationId === null) {
+        this.$apollo
+          .mutate({
+            mutation: addPresentation,
+            variables: {
+              meeting: this.meeting[0].id,
+              indicator: form.indicator.id,
+              presenter: form.presenter,
+              comments: form.comments,
+              completeness: form.completeness, // "NOTYETACHIEVED"
+              grade: form.grade, // "UNKNOWN"
+            },
+            // update(cache, { data: { createPresentation } }) {
+            //   console.log('cache: ', cache)
+            // },
+          })
+          .then((res) => {
+            this.handleReset()
+            this.showModal = false
+          })
+          .catch((err) => {
+            this.$refs.addPresentation.message = err
+          })
+      } else {
+        this.$apollo
+          .mutate({
+            mutation: updatePresentation,
+            variables: {
+              presId: this.presentationId,
+              meeting: this.meeting[0].id,
+              indicator: form.indicator.id,
+              presenter: form.presenter,
+              comments: form.comments,
+              completeness: form.completeness, // "NOTYETACHIEVED"
+              grade: form.grade, // "UNKNOWN"
+            },
+            // update(cache, { data: { createPresentation } }) {
+            //   console.log('cache: ', cache)
+            // },
+          })
+          .then((res) => {
+            this.handleReset()
+            this.showModal = false
+          })
+          .catch((err) => {
+            this.$refs.addPresentation.message = err
+          })
+      }
+    },
+    handleReset() {
+      this.$refs.addPresentation.message = ''
+      this.$refs.addPresentation.form = {
+        presenter: null,
+        comments: null,
+        indicator: { name: null, id: null },
+        completeness: null,
+        grade: null,
+      }
+    },
+    addPresentation(meeting) {
+      this.modalTitle = 'Add Presentation'
+      this.meetingId = meeting.id
+      this.presentationId = null
+      this.showModal = true
+    },
+    updatePresentation(meeting, presentation, index) {
+      this.modalTitle = 'Update Presentation'
+      this.meetingId = meeting.id
+      this.presentationId = presentation.id
+      this.presentationIndex = index
+      this.showModal = true
+    },
+    deletePresentation(presentation) {
       this.$apollo
         .mutate({
-          mutation: addPresentation,
-          // mutation: gql`
-          //   mutation CreatePresentation(
-          //     $meeting: ID
-          //     $indicator: ID
-          //     $presenter: String
-          //     $comments: String
-          //     $status: ENUM_PRESENTATIONS_PROGRESSSTATUS = ${form.progressStatus}
-          //     $achieved: ENUM_PRESENTATIONS_PROGRESSACHIEVED = ${form.progressAchieved}
-          //   ) {
-          //     createPresentation(
-          //       input: {
-          //         data: {
-          //           meeting: $meeting
-          //           indicator: $indicator
-          //           presenter: $presenter
-          //           comments: $comments
-          //         }
-          //       }
-          //     ) {
-          //       presentation {
-          //         id
-          //         presenter
-          //         comments
-          //         indicator {
-          //           id
-          //           name
-          //         }
-          //         progressStatus
-          //         progressAchieved
-          //       }
-          //     }
-          //   }
-          // `,
+          mutation: deletePresentation,
           variables: {
-            meeting: this.meeting[0].id,
-            indicator: form.indicator.id,
-            presenter: form.presenter,
-            comments: form.comments,
-            status: form.progressStatus, // "NOTYETACHIEVED"
-            achieved: form.progressAchieved, // "UNKNOWN"
-            test: 'PASS',
+            pres: presentation.id,
           },
           // update(cache, { data: { createPresentation } }) {
           //   console.log('cache: ', cache)
@@ -148,21 +198,22 @@ export default {
           console.error('err: ', err)
         })
     },
-    handleReset() {
-      this.$refs.addPresentation.form = {
-        Presenter: null,
-        Comments: null,
-        indicator: { name: null },
-        progressStatus: null,
-        progressAchieved: null,
-      }
-    },
-    addPresentation(meeting) {
-      this.meetingId = meeting.id
-      this.showMeeting = true
-    },
     handleRowClick(row) {
       this.meetingId = this.meetingId === row.id ? null : row.id
+    },
+    handleActions(method, index, row) {
+      if (method === 'update') {
+        this.updatePresentation(
+          this.meeting[0],
+          this.$refs.rowDetails.data.presentations[index],
+          index
+        )
+      } else {
+        window.confirm('Confirm delete presentation?') &&
+          this.deletePresentation(
+            this.$refs.rowDetails.data.presentations[index]
+          )
+      }
     },
   },
   apollo: {
@@ -186,18 +237,6 @@ export default {
       query: boardMeetingQuery,
       variables() {
         return { meeting: this.meetingId }
-      },
-      result({ data }) {
-        // returns an array with one element
-        data.meeting.forEach((row, i) => {
-          row.presentations.forEach((pres) => {
-            pres.indicator =
-              typeof pres.indicator === 'object'
-                ? pres.indicator.name
-                : pres.indicator
-          })
-        })
-        return data
       },
     },
   },
