@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import Table from '~/components/table-meetings'
+import Table from '~/components/table'
 export default {
   components: { Table },
   props: {

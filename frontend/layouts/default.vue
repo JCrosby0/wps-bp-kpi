@@ -79,7 +79,7 @@ html {
 
 .button--grey {
   display: inline-block;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   border: 1px solid var(--color-grey);
   color: var(--color-grey);
   text-decoration: none;

@@ -62,7 +62,7 @@
 <script>
 // import gql from 'graphql-tag'
 import Spinner from '~/components/spinner'
-import Table from '~/components/table-meetings'
+import Table from '~/components/table'
 import Modal from '~/components/modal'
 import Details from '~/components/table-meeting-row-details'
 import AddPresentation from '~/components/add-presentation'
@@ -73,7 +73,7 @@ import updatePresentation from '~/apollo/mutations/presentations/updatePresentat
 import deletePresentation from '~/apollo/mutations/presentations/deletePresentation'
 class Button {
   constructor(display, title, click, addClass = 'negative') {
-    this.classes = 'buttons ' + addClass
+    this.classes = { buttons: true, [addClass]: true }
     this.display = display
     this.title = title
     this.click = click
@@ -92,6 +92,7 @@ export default {
       meetingId: null,
       presentationId: null,
       presentationIndex: null,
+      submitting: false,
       buttons: [
         new Button('Submit', 'Submit Form', this.handleSubmit, 'positive'),
         new Button('Reset', 'Reset Form', this.handleReset),
@@ -107,7 +108,16 @@ export default {
       // meeting.id
       this.meetingId = meeting.id
     },
+    toggleSubmitDisabled(status) {
+      this.buttons[0].classes.disabled = status
+    },
     handleSubmit(event, form = this.$refs.addPresentation.form) {
+      // validation:
+      if (!form.indicator || !form.indicator.id) {
+        this.$refs.addPresentation.message = 'Fields are missing'
+        return
+      }
+      this.toggleSubmitDisabled(true)
       if (this.presentationId === null) {
         this.$apollo
           .mutate({
@@ -155,10 +165,13 @@ export default {
           .catch((err) => {
             this.$refs.addPresentation.message = err
           })
+          .finally(() => {
+            this.toggleSubmitDisabled(false)
+          })
       }
     },
     handleReset() {
-      this.$refs.addPresentation.message = ''
+      this.$refs.addPresentation.message = this.$refs.addPresentation.defaultMessage
       this.$refs.addPresentation.form = {
         presenter: null,
         comments: null,
@@ -168,6 +181,7 @@ export default {
       }
     },
     addPresentation(meeting) {
+      // this.handleReset()
       this.modalTitle = 'Add Presentation'
       this.meetingId = meeting.id
       this.presentationId = null

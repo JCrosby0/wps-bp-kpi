@@ -1,5 +1,5 @@
-query indicatorsNoted {
-  progress: indicatorsConnection(where: { boardStatusProgressNoted: true }) {
+query indicatorsProgress {
+  progress: presentationsConnection(where: { completeness_eq: "INPROGRESS" }) {
     aggregate {
       count
     }

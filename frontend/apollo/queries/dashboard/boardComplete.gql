@@ -1,5 +1,5 @@
-query indicatorsNoted {
-  complete: indicatorsConnection(where: { boardStatusAchieved: true }) {
+query indicatorsComplete {
+  complete: presentationsConnection(where: { completeness_eq: "COMPLETE" }) {
     aggregate {
       count
     }

@@ -69,12 +69,17 @@
   height: 2.5rem;
   width: 5rem;
   border-radius: 0.5rem;
-  padding: 1rem, 2rem;
+  padding: 0.5rem, 2rem;
 }
 .buttons:hover {
-  box-shadow: 0px 0px 6px 6px rgba(255, 255, 255, 0.5);
+  color: #fff;
+  background-color: var(--color-grey);
 }
 .positive {
   background: var(--color-orange);
+}
+.disabled {
+  cursor: not-allowed;
+  background: none;
 }
 </style>

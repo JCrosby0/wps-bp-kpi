@@ -21,7 +21,7 @@
         class="indicators"
       > -->
       <div class="row">
-        <label for="indicatorName" class="label">Indicator:</label>
+        <label for="indicatorName" class="label required">Indicator:</label>
         <select
           v-if="!$apolloData.loading"
           v-model="form.indicator"
@@ -103,7 +103,8 @@ export default {
   },
   data() {
     return {
-      message: '',
+      message: '* Required Fields',
+      defaultMessage: '* Required Fields',
       form: {
         presenter: null,
         comments: null,
@@ -113,11 +114,11 @@ export default {
       },
     }
   },
-  computed: {
-    theForm() {
-      return document.getElementById('formAddpresentation')
-    },
-  },
+  // computed: {
+  //   theForm() {
+  //     return document.getElementById('formAddpresentation')
+  //   },
+  // },
   mounted() {
     if (this.presentationIndex === null) return
     const pres = this.data.presentations[this.presentationIndex]
@@ -195,5 +196,9 @@ option {
 .message {
   color: red;
   padding-left: 7rem;
+}
+.required::before {
+  content: '*';
+  color: red;
 }
 </style>

@@ -1,5 +1,5 @@
-query indicatorsNoted {
-  noted: indicatorsConnection(where: { boardDateLastNoted_null: false }) {
+query indicatorsPresented {
+  noted: presentationsConnection(where: { indicator_null: false }) {
     aggregate {
       count
     }

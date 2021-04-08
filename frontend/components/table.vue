@@ -22,7 +22,14 @@
         @click="$emit('rowSelect', row)"
       >
         <td v-for="(col, c) in headers" :key="`r${r}c${c}`" :class="col.align">
-          {{ col.key === 'indicator' ? row.indicator.name : row[col.key] }}
+          <span v-if="col.key === 'indicator'">{{ row.indicator.name }}</span>
+          <div
+            v-else-if="['completeness', 'grade'].includes(col.key)"
+            :class="classify(row[col.key])"
+          >
+            {{ transform(row[col.key]) }}
+          </div>
+          <span v-else>{{ row[col.key] }}</span>
         </td>
         <td class="center">
           <slot name="actions" :index="r" :row="row"></slot>
@@ -69,6 +76,33 @@ export default {
       return tableSpecs[this.headerKey]
     },
   },
+  methods: {
+    classify(value) {
+      switch (value) {
+        case 'ONGOING':
+        case 'COMPLETE':
+        case 'ACHIEVE':
+        case 'EXCEED':
+          return 'badge green'
+        case 'PARTIAL':
+        case 'INPROGRESS':
+          return 'badge orange'
+        case 'NOTSTARTED':
+        case 'FAIL':
+          return 'badge red'
+      }
+    },
+    transform(value) {
+      const dict = {
+        NOTSTARTED: 'Not Started',
+        INPROGRESS: 'In Progress',
+      }
+      if (Object.keys(dict).includes(value)) {
+        value = dict[value]
+      }
+      return value.toLowerCase()
+    },
+  },
 }
 </script>
 <style scoped>
@@ -95,5 +129,22 @@ td.full {
 .clickable:hover {
   background: var(--color-light-orange);
   border: 1px grey solid;
+}
+
+.badge {
+  border: 1px grey solid;
+  padding: 0.25rem;
+  text-align: center;
+  text-transform: capitalize;
+}
+.green {
+  background: green;
+  color: white;
+}
+.orange {
+  background: orange;
+}
+.red {
+  background: red;
 }
 </style>
