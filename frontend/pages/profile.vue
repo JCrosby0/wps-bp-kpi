@@ -17,7 +17,8 @@
       <div class="future-plans">
         <p>
           Future Plans: <br />
-          List of indicators for which user is focal point
+          Link to indicators for which user is the focal point. Opportunity of
+          all focal points are users.
         </p>
       </div>
     </div>
@@ -42,6 +43,7 @@ export default {
 .profile-box {
   text-align: left;
   padding: 2rem;
+  margin: auto;
 }
 .future-plans {
   text-align: left;

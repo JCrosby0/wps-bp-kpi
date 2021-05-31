@@ -90,6 +90,9 @@ export default {
 }
 </script>
 <style scoped>
+.columns {
+  margin: auto;
+}
 .field {
   margin-top: 1rem;
   width: 250px;

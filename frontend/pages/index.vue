@@ -1,18 +1,15 @@
 <template>
   <div class="container">
     <div class="main center">
+      <h1>Dashboard:</h1>
       <p class="description">
         This portal provides a queriable summary of Strategies for Improvement,
         Success Measurements and Performance Targets along with indicators
         showing progress towards achieving the Business Plan's goals
       </p>
       <Dashboard></Dashboard>
-      <p class="notification">
-        Please note: the server sleeps when idle, and may take up to 20 seconds
-        to respond when waking up. Please be patient!
-      </p>
       <div class="left">
-        <h6>Known Issues:</h6>
+        <h2>Known Issues:</h2>
         <ul>
           <li>
             Refreshing a page may display a page not found error. Go back to
@@ -20,17 +17,22 @@
             desired page.
           </li>
           <li>
+            Refreshing an Indicators by date page causes the date range
+            calculation to fail. Navigate to a different date range and back to
+            reset.
+          </li>
+          <li>
             Emails are not currently being sent out when with account
             registration validation or password reset requests. Contact Joe for
             manual account validation.
           </li>
         </ul>
-        <h6>Planned Features:</h6>
+        <h2>Planned Features:</h2>
         <ul>
           <li>View Indicators by latest update</li>
           <li>
-            Add additional tab to indicators: evidence (links to supporting /
-            relevant activities)
+            Improve Meeting/Presentation input to allow quali/quanti results
+            input
           </li>
         </ul>
       </div>
@@ -51,6 +53,9 @@ export default {
 }
 </script>
 <style scoped>
+h1 {
+  text-align: left;
+}
 .main {
   padding: 1rem;
   flex: 1 0 calc(100% - 1rem);

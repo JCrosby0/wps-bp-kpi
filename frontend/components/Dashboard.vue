@@ -85,10 +85,10 @@ export default {
   padding: 1rem;
   background: #eee;
   border: 1px black solid;
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 .highlight {
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: bold;
 }
 .green {
