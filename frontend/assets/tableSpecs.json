@@ -69,13 +69,13 @@
       "display": "Progress Status",
       "key": "completeness",
       "width": "",
-      "align": "left"
+      "align": "center"
     },
     {
       "display": "Completion Status",
       "key": "grade",
       "width": "",
-      "align": "left"
+      "align": "center"
     }
   ]
 }

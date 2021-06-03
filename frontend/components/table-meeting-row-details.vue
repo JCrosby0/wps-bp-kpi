@@ -13,18 +13,22 @@
         header-key="presentations"
       >
         <template #actions="slotProps">
-          <button
-            class="button--grey"
-            @click="$emit('update', slotProps.index)"
-          >
-            Update
-          </button>
-          <button
-            class="button--grey"
-            @click="$emit('delete', slotProps.index)"
-          >
-            Delete
-          </button>
+          <div class="buttonGroup">
+            <button
+              class="button--grey"
+              title="Edit"
+              @click="$emit('update', slotProps.index)"
+            >
+              ✏️
+            </button>
+            <button
+              class="button--grey"
+              title="Delete"
+              @click="$emit('delete', slotProps.index)"
+            >
+              ❌
+            </button>
+          </div>
         </template>
       </Table>
     </div>
@@ -49,5 +53,8 @@ export default {
   background: #fefefe;
   padding: 1rem;
   border: 1px grey solid;
+}
+.buttonGroup {
+  width: 80px;
 }
 </style>

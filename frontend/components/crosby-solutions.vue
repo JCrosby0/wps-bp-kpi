@@ -11,6 +11,7 @@
       type="image/svg+xml"
       alt="crosby solutions"
       height="16px"
+      width="127px"
     ></object>
   </a>
 </template>

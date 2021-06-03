@@ -1,5 +1,5 @@
 <template>
-  <table v-if="data" id="meetings">
+  <table v-if="data">
     <thead>
       <tr>
         <th
@@ -90,6 +90,8 @@ export default {
         case 'NOTSTARTED':
         case 'FAIL':
           return 'badge red'
+        case 'UNKNOWN':
+          return 'badge grey'
       }
     },
     transform(value) {
@@ -111,17 +113,29 @@ table {
   border-spacing: 0;
   /* border-collapse: collapse; */
 }
-
+table table tbody:nth-of-type(even) tr {
+  background: #eee;
+}
 td,
 th {
   padding: 0.25rem 0.5rem;
+}
+table button {
+  width: 160px;
+  padding: 0.5rem;
+}
+table table button {
+  width: auto;
+}
+table table td {
+  vertical-align: top;
 }
 td.full {
   padding: 0;
 }
 .expanded {
   background: var(--color-orange);
-  border: 1px grey solid;
+  outline: 1px grey solid;
 }
 .clickable {
   cursor: pointer;
@@ -133,9 +147,14 @@ td.full {
 
 .badge {
   border: 1px grey solid;
-  padding: 0.25rem;
+  padding: 0.5rem;
+  height: 34px;
+  width: 90px;
+  font-size: 0.75rem;
   text-align: center;
+  margin: auto;
   text-transform: capitalize;
+  border-radius: 0.25rem;
 }
 .green {
   background: green;
@@ -146,5 +165,8 @@ td.full {
 }
 .red {
   background: red;
+}
+.grey {
+  background: lightgray;
 }
 </style>
