@@ -94,7 +94,9 @@ export default {
         ...this.$apolloData?.data?.measuringSuccesses,
         ...this.$apolloData?.data?.performanceTargets,
       ].filter((n) =>
-        this.searchString ? n.value?.includes(this.searchString) : true
+        this.searchString
+          ? n.value?.toLowerCase().includes(this.searchString.toLowerCase())
+          : true
       )
     },
   },

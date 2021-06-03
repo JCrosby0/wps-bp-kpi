@@ -56,6 +56,9 @@ export default {
 h1 {
   text-align: left;
 }
+h2 {
+  padding-top: 2rem;
+}
 .main {
   padding: 1rem;
   flex: 1 0 calc(100% - 1rem);
@@ -65,13 +68,7 @@ h1 {
   font-size: 0.8rem;
   text-align: right;
 }
-.logo {
-  font-size: 16px;
-  width: 8em;
-  height: 1em;
-  margin: 0;
-  margin-left: calc(100% - 8em);
-}
+
 .description {
   background: black;
   padding: 1rem;
