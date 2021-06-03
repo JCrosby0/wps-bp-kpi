@@ -1,0 +1,24 @@
+# Write your query or mutation here
+# Knowing indicator ID
+# query Presentations for specific Indicator
+# return Meeting entry for matching meeting ID
+
+query Presentations($indicatorId: ID) {
+  presentations(where: { indicator: { id: $indicatorId } }) {
+    id
+    meeting {
+      id
+      date
+      year
+      term
+      week
+    }
+    indicator {
+      id
+    }
+    presenter
+    comments
+    completeness
+    grade
+  }
+}
